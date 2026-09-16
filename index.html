@@ -1,22 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TradeBridge Commercial Intelligence</title>
+  <meta name="description" content="TradeBridge investigates commercial decisions involving customers, markets, suppliers, distributors, partners, channels, geographies, and growth opportunities.">
+  <style>
+    :root {
+      --navy: #10283d;
+      --navy-light: #193c58;
+      --blue: #285f82;
+      --cream: #f7f4ed;
+      --white: #ffffff;
+      --ink: #17212a;
+      --muted: #65727d;
+      --line: #d8e0e6;
+      --gold: #b58c4a;
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color: var(--ink);
+      background: var(--white);
+      line-height: 1.6;
+    }
+    a { color: inherit; }
+    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+
+    header {
+      background: var(--navy);
+      color: var(--white);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,.12);
+    }
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+    }
+    .brand {
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+    .mark {
+      width: 42px;
+      height: 42px;
+      border: 1px solid rgba(255,255,255,.35);
+      display: grid;
+      place-items: center;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
+    .brand-text strong { display: block; font-size: 17px; letter-spacing: .01em; }
+    .brand-text span {
+      display: block;
+      font-size: 11px;
+      color: rgba(255,255,255,.67);
+      text-transform: uppercase;
+      letter-spacing: .13em;
+      margin-top: 1px;
+    }
+    nav ul { list-style: none; display: flex; align-items: center; gap: 25px; }
+    nav a { text-decoration: none; font-size: 14px; color: rgba(255,255,255,.82); }
+    nav a:hover { color: var(--white); }
+    .nav-contact { border: 1px solid rgba(255,255,255,.42); padding: 9px 15px; }
+
+    .hero {
+      background: linear-gradient(120deg, rgba(16,40,61,1) 0%, rgba(20,54,79,1) 60%, rgba(35,78,103,1) 100%);
+      color: var(--white);
+      padding: 112px 0 105px;
+    }
+    .hero-inner { max-width: 900px; }
+    .eyebrow {
+      display: inline-block;
+      color: #d2b06f;
+      text-transform: uppercase;
+      letter-spacing: .18em;
+      font-size: 12px;
+      font-weight: 700;
+      margin-bottom: 24px;
+    }
+    h1 {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(46px, 7vw, 78px);
+      line-height: 1.02;
+      letter-spacing: -.035em;
+      max-width: 950px;
+      font-weight: 500;
+    }
+    .hero-lead {
+      max-width: 760px;
+      color: rgba(255,255,255,.81);
+      font-size: clamp(18px, 2.2vw, 23px);
+      line-height: 1.55;
+      margin-top: 30px;
+    }
+    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
+    .button {
+      display: inline-block;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 14px 22px;
+      transition: .2s ease;
+    }
+    .button-primary { background: var(--white); color: var(--navy); }
+    .button-primary:hover { transform: translateY(-1px); background: var(--cream); }
+    .button-secondary { border: 1px solid rgba(255,255,255,.45); color: var(--white); }
+    .button-secondary:hover { background: rgba(255,255,255,.08); }
+    .motto {
+      margin-top: 58px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(255,255,255,.16);
+      color: rgba(255,255,255,.66);
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: .19em;
+    }
+
+    section { padding: 92px 0; }
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: .16em;
+      color: var(--blue);
+      font-weight: 800;
+      font-size: 12px;
+      margin-bottom: 13px;
+    }
+    h2 {
+      font-family: Georgia, "Times New Roman", serif;
+      color: var(--navy);
+      font-size: clamp(34px, 5vw, 52px);
+      line-height: 1.08;
+      letter-spacing: -.025em;
+      font-weight: 500;
+      max-width: 840px;
+    }
+    .section-intro { max-width: 770px; margin-top: 20px; color: var(--muted); font-size: 18px; }
+
+    .not-list { background: var(--cream); }
+    .not-list-grid {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 75px;
+      align-items: start;
+    }
+    .questions { border-left: 3px solid var(--gold); padding-left: 28px; }
+    .questions p {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      color: var(--navy);
+      margin-bottom: 17px;
+      line-height: 1.28;
+    }
+
+    .cards {
+      margin-top: 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1px;
+      background: var(--line);
+      border: 1px solid var(--line);
+    }
+    .card { background: var(--white); padding: 34px 30px 36px; min-height: 230px; }
+    .card-number { color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .13em; margin-bottom: 21px; }
+    .card h3 { color: var(--navy); font-size: 20px; margin-bottom: 11px; }
+    .card p { color: var(--muted); font-size: 15px; }
+
+    .process { background: var(--navy); color: var(--white); }
+    .process .section-kicker { color: #d2b06f; }
+    .process h2 { color: var(--white); }
+    .process .section-intro { color: rgba(255,255,255,.68); }
+    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 42px; margin-top: 50px; }
+    .step { border-top: 1px solid rgba(255,255,255,.24); padding-top: 24px; }
+    .step span { color: #d2b06f; font-size: 12px; font-weight: 800; letter-spacing: .15em; }
+    .step h3 { font-family: Georgia, "Times New Roman", serif; font-size: 26px; font-weight: 500; margin: 11px 0 13px; }
+    .step p { color: rgba(255,255,255,.68); font-size: 15px; }
+
+    .standard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
+    .principles { border-top: 1px solid var(--line); }
+    .principle { padding: 18px 0; border-bottom: 1px solid var(--line); display: flex; gap: 18px; align-items: baseline; }
+    .principle strong { min-width: 145px; color: var(--navy); }
+    .principle span { color: var(--muted); }
+
+    .partners { background: var(--cream); }
+    .boundary { margin-top: 38px; background: var(--white); padding: 38px; border: 1px solid var(--line); }
+    .boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
+    .boundary h3 { color: var(--navy); margin-bottom: 10px; font-size: 20px; }
+    .boundary p { color: var(--muted); }
+    .partner-line {
+      margin-top: 30px;
+      color: var(--navy);
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      line-height: 1.35;
+    }
+
+    .about-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 75px; }
+    .about-label { font-size: 13px; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: .14em; }
+    .about-copy p { color: var(--muted); font-size: 17px; margin-bottom: 18px; }
+    .about-copy strong { color: var(--navy); }
+
+    .contact { background: #0c2234; color: var(--white); }
+    .contact h2 { color: var(--white); }
+    .contact .section-kicker { color: #d2b06f; }
+    .contact-copy { color: rgba(255,255,255,.72); max-width: 720px; margin-top: 22px; font-size: 18px; }
+    .contact-email {
+      display: inline-block;
+      margin-top: 33px;
+      font-size: clamp(20px, 4vw, 28px);
+      color: var(--white);
+      text-decoration: none;
+      border-bottom: 1px solid rgba(255,255,255,.35);
+      padding-bottom: 4px;
+    }
+    .contact-email:hover { border-color: var(--white); }
+
+    footer { background: #081926; color: rgba(255,255,255,.58); padding: 34px 0; font-size: 13px; }
+    .footer-inner { display: flex; justify-content: space-between; gap: 25px; flex-wrap: wrap; }
+    .footer-motto { color: rgba(255,255,255,.82); letter-spacing: .08em; }
+
+    @media (max-width: 850px) {
+      nav ul { display: none; }
+      .hero { padding: 83px 0 80px; }
+      section { padding: 72px 0; }
+      .not-list-grid, .standard-grid, .about-grid, .boundary-grid { grid-template-columns: 1fr; gap: 40px; }
+      .cards { grid-template-columns: 1fr; }
+      .steps { grid-template-columns: 1fr; gap: 30px; }
+      .card { min-height: 0; }
+    }
+
+    @media (max-width: 500px) {
+      .container { width: min(var(--max), calc(100% - 28px)); }
+      .brand-text span { display: none; }
+      h1 { font-size: 44px; }
+      .hero-lead { font-size: 18px; }
+      .boundary { padding: 26px; }
+      .principle { display: block; }
+      .principle strong { display: block; margin-bottom: 4px; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="brand" href="#top">
+        <div class="mark">TB</div>
+        <div class="brand-text">
+          <strong>TradeBridge</strong>
+          <span>Commercial Intelligence</span>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="#investigate">What We Investigate</a></li>
+          <li><a href="#process">How It Works</a></li>
+          <li><a href="#partners">Referral Partners</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a class="nav-contact" href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-inner">
+        <span class="eyebrow">TradeBridge Commercial Intelligence</span>
+        <h1>Before you commit resources, know whether the opportunity deserves pursuit.</h1>
+        <p class="hero-lead">
+          TradeBridge investigates important commercial decisions involving customers, markets, suppliers,
+          distributors, partners, channels, geographies, expansion opportunities, and other external business questions.
+        </p>
+        <div class="hero-actions">
+          <a class="button button-primary" href="#contact">Bring Us the Decision</a>
+          <a class="button button-secondary" href="#investigate">See What We Investigate</a>
+        </div>
+        <div class="motto">Intelligence We Can Defend.</div>
       </div>
     </section>
 
-  </main>
+    <section class="not-list">
+      <div class="container not-list-grid">
+        <div>
+          <div class="section-kicker">The question before execution</div>
+          <h2>Not another lead list.</h2>
+          <p class="section-intro">
+            Sometimes the important question is not who you can contact. It is which opportunity actually deserves
+            your time, money, capacity, or attention.
+          </p>
+        </div>
 
+        <div class="questions">
+          <p>Which customers are actually worth pursuing?</p>
+          <p>Which market deserves expansion?</p>
+          <p>Which supplier is worth depending on?</p>
+          <p>Which distributor or partner genuinely fits?</p>
+          <p>Which attractive-looking opportunity should be rejected?</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="investigate">
+      <div class="container">
+        <div class="section-kicker">What we investigate</div>
+        <h2>Commercial unknowns around decisions that matter.</h2>
+        <p class="section-intro">
+          TradeBridge is built for smaller established businesses that need evidence before committing resources
+          but may not have a dedicated internal commercial-intelligence team.
+        </p>
+
+        <div class="cards">
+          <article class="card">
+            <div class="card-number">01</div>
+            <h3>Customers &amp; Prospects</h3>
+            <p>Which accounts deserve pursuit, which should be deprioritized, and what evidence argues against spending sales time on them.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">02</div>
+            <h3>Markets &amp; Geographies</h3>
+            <p>Where demand, competition, commercial fit, and practical realities support expansion - and where they do not.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">03</div>
+            <h3>Suppliers &amp; Sourcing</h3>
+            <p>Which counterparties warrant deeper consideration, what is verifiable, and what risk or weakness remains unresolved.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">04</div>
+            <h3>Channels, Distributors &amp; Partners</h3>
+            <p>Which relationships could realistically help reach the market and whether the proposed commercial fit stands up to evidence.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">05</div>
+            <h3>Competitive Landscape</h3>
+            <p>What competitors, alternatives, market structure, and outside signals actually mean for the decision in front of management.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-number">06</div>
+            <h3>Capacity-to-Market</h3>
+            <p>When a business adds production, warehouse, service, or distribution capacity, which outside demand deserves that capacity first?</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="process" class="process">
+      <div class="container">
+        <div class="section-kicker">How TradeBridge works</div>
+        <h2>Start with the decision. Investigate both sides.</h2>
+        <p class="section-intro">
+          The objective is not to generate information for its own sake. The objective is to make a specific commercial decision more defensible.
+        </p>
+
+        <div class="steps">
+          <article class="step">
+            <span>STEP 01</span>
+            <h3>Define the decision</h3>
+            <p>We establish what management actually needs to decide, what is already known, what remains uncertain, and what evidence would materially change the choice.</p>
+          </article>
+
+          <article class="step">
+            <span>STEP 02</span>
+            <h3>Investigate both sides</h3>
+            <p>We look for evidence supporting the opportunity and evidence against it. Weak evidence does not become strong evidence because it supports the desired answer.</p>
+          </article>
+
+          <article class="step">
+            <span>STEP 03</span>
+            <h3>Make it defensible</h3>
+            <p>We separate what is verified, what remains unknown, what deserves pursuit, what should be rejected, and what must be verified before resources are committed.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container standard-grid">
+        <div>
+          <div class="section-kicker">Our standard</div>
+          <h2>Intelligence We Can Defend.</h2>
+          <p class="section-intro">TradeBridge is built around evidence discipline rather than confident-sounding conclusions.</p>
+        </div>
+
+        <div class="principles">
+          <div class="principle">
+            <strong>Evidence first.</strong>
+            <span>Claims should be tied to evidence that can be examined, challenged, and traced.</span>
+          </div>
+          <div class="principle">
+            <strong>Unknown stays unknown.</strong>
+            <span>When the evidence does not establish something, we do not fill the gap with a guess.</span>
+          </div>
+          <div class="principle">
+            <strong>Negative evidence matters.</strong>
+            <span>A reason not to pursue an opportunity can be as valuable as a reason to pursue it.</span>
+          </div>
+          <div class="principle">
+            <strong>Signal is not opportunity.</strong>
+            <span>A promising event, announcement, expansion, or trend does not automatically create a worthwhile commercial move.</span>
+          </div>
+          <div class="principle">
+            <strong>Know the boundary.</strong>
+            <span>When the real problem belongs with another specialist, TradeBridge should stop.</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="partners" class="partners">
+      <div class="container">
+        <div class="section-kicker">For referral partners</div>
+        <h2>Know where your expertise stops. We do too.</h2>
+        <p class="section-intro">TradeBridge works alongside specialists whose expertise begins where ours ends.</p>
+
+        <div class="boundary">
+          <div class="boundary-grid">
+            <div>
+              <h3>When TradeBridge should stop</h3>
+              <p>
+                If our research shows that the real issue is internal operations, accounting, financing, legal, HR,
+                recruiting, technology implementation, logistics, compliance, or another specialist discipline,
+                we should not stretch the assignment to keep the work.
+              </p>
+            </div>
+
+            <div>
+              <h3>When TradeBridge may begin</h3>
+              <p>
+                When another professional reaches the point where the unresolved question becomes which market,
+                customer, supplier, distributor, partner, channel, geography, or commercial opportunity deserves pursuit,
+                that may be our lane.
+              </p>
+            </div>
+          </div>
+
+          <div class="partner-line">
+            We would rather prove one clean handoff than manufacture a partnership on paper.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="container about-grid">
+        <div><div class="about-label">About TradeBridge</div></div>
+
+        <div class="about-copy">
+          <p>
+            <strong>TradeBridge Commercial Intelligence</strong> was built for businesses facing important outside commercial decisions
+            without necessarily having a dedicated internal intelligence team.
+          </p>
+          <p>
+            Founder <strong>Joshua Nichols</strong> works directly on engagements using structured research, source verification,
+            opposing evidence, explicit uncertainty controls, and decision-focused analysis.
+          </p>
+          <p>
+            TradeBridge is not automatically the technical expert in a client's industry. Our responsibility is the commercial intelligence
+            surrounding the decision - and knowing when the question belongs with somebody else.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact">
+      <div class="container">
+        <div class="section-kicker">Start here</div>
+        <h2>Bring us the decision.</h2>
+        <p class="contact-copy">
+          Tell us what your business is considering, what you already know, and what you still cannot answer confidently.
+          If it belongs with TradeBridge, we will explain how we would investigate it. If it does not, we will tell you that too.
+        </p>
+
+        <a class="contact-email" href="mailto:jnichols@tradebridgeintelligence.com?subject=Commercial%20Decision%20Inquiry">
+          jnichols@tradebridgeintelligence.com
+        </a>
+      </div>
+    </section>
+  </main>
 
   <footer>
     <div class="container footer-inner">
-
-      <div>
-        © 2026 TradeBridge Commercial Intelligence
-      </div>
-
-      <div class="footer-motto">
-        Intelligence We Can Defend.
-      </div>
-
+      <div>&copy; 2026 TradeBridge Commercial Intelligence</div>
+      <div class="footer-motto">Intelligence We Can Defend.</div>
     </div>
   </footer>
-
 </body>
 </html>
