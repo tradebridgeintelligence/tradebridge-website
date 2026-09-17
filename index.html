@@ -5,6 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TradeBridge Commercial Intelligence</title>
   <meta name="description" content="TradeBridge investigates commercial decisions involving customers, markets, suppliers, distributors, partners, channels, geographies, and growth opportunities.">
+  <meta name="theme-color" content="#10283d">
+  <meta property="og:title" content="TradeBridge Commercial Intelligence">
+  <meta property="og:description" content="Before you commit resources, know whether the opportunity deserves pursuit.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://tradebridgeintelligence.com/">
   <style>
     :root {
       --navy: #10283d;
@@ -39,7 +44,7 @@
       border-bottom: 1px solid rgba(255,255,255,.12);
     }
     .nav {
-      min-height: 76px;
+      min-height: 96px;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -49,35 +54,51 @@
       text-decoration: none;
       display: flex;
       align-items: center;
-      gap: 13px;
+      gap: 12px;
+      min-width: 0;
     }
-    .mark {
-      width: 42px;
-      height: 42px;
-      border: 1px solid rgba(255,255,255,.35);
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-      letter-spacing: -1px;
+    .brand-logo {
+      width: 235px;
+      height: 82px;
+      overflow: hidden;
+      flex: 0 0 auto;
+      background: #fff;
+      border: 1px solid rgba(255,255,255,.18);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
-    .brand-text strong { display: block; font-size: 17px; letter-spacing: .01em; }
-    .brand-text span {
+    .brand-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
       display: block;
-      font-size: 11px;
-      color: rgba(255,255,255,.67);
-      text-transform: uppercase;
-      letter-spacing: .13em;
-      margin-top: 1px;
     }
     nav ul { list-style: none; display: flex; align-items: center; gap: 25px; }
     nav a { text-decoration: none; font-size: 14px; color: rgba(255,255,255,.82); }
     nav a:hover { color: var(--white); }
     .nav-contact { border: 1px solid rgba(255,255,255,.42); padding: 9px 15px; }
+    a:focus-visible { outline: 2px solid #d2b06f; outline-offset: 4px; }
+    .mobile-contact { display: none; }
+
+    .brand-banner {
+      background: #fff;
+      border-bottom: 1px solid var(--line);
+    }
+    .brand-banner-inner {
+      width: min(var(--max), 100%);
+      margin: 0 auto;
+    }
+    .brand-banner img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
 
     .hero {
       background: linear-gradient(120deg, rgba(16,40,61,1) 0%, rgba(20,54,79,1) 60%, rgba(35,78,103,1) 100%);
       color: var(--white);
-      padding: 112px 0 105px;
+      padding: 92px 0 96px;
     }
     .hero-inner { max-width: 900px; }
     .eyebrow {
@@ -231,7 +252,19 @@
 
     @media (max-width: 850px) {
       nav ul { display: none; }
-      .hero { padding: 83px 0 80px; }
+      .nav { min-height: 84px; gap: 14px; }
+      .brand-logo { width: 200px; height: 70px; }
+      .mobile-contact {
+        display: inline-block;
+        margin-left: auto;
+        color: var(--white);
+        text-decoration: none;
+        border: 1px solid rgba(255,255,255,.42);
+        padding: 8px 12px;
+        font-size: 13px;
+      }
+      .brand-banner-inner { width: 100%; }
+      .hero { padding: 76px 0 78px; }
       section { padding: 72px 0; }
       .not-list-grid, .standard-grid, .about-grid, .boundary-grid { grid-template-columns: 1fr; gap: 40px; }
       .cards { grid-template-columns: 1fr; }
@@ -241,7 +274,9 @@
 
     @media (max-width: 500px) {
       .container { width: min(var(--max), calc(100% - 28px)); }
-      .brand-text span { display: none; }
+      .brand-logo { width: 170px; height: 59px; }
+      .mobile-contact { padding: 7px 10px; font-size: 12px; }
+      .contact-email { font-size: 16px; max-width: 100%; overflow-wrap: anywhere; }
       h1 { font-size: 44px; }
       .hero-lead { font-size: 18px; }
       .boundary { padding: 26px; }
@@ -253,11 +288,9 @@
 <body>
   <header>
     <div class="container nav">
-      <a class="brand" href="#top">
-        <div class="mark">TB</div>
-        <div class="brand-text">
-          <strong>TradeBridge</strong>
-          <span>Commercial Intelligence</span>
+      <a class="brand" href="#top" aria-label="TradeBridge Commercial Intelligence home">
+        <div class="brand-logo">
+          <img src="tradebridge-logo-nav.png" alt="TradeBridge Intelligence — Commercial Intelligence. Intelligence We Can Defend.">
         </div>
       </a>
 
@@ -270,10 +303,17 @@
           <li><a class="nav-contact" href="#contact">Contact</a></li>
         </ul>
       </nav>
+      <a class="mobile-contact" href="#contact">Contact</a>
     </div>
   </header>
 
   <main id="top">
+    <section class="brand-banner" aria-label="TradeBridge Intelligence brand banner">
+      <div class="brand-banner-inner">
+        <img src="tradebridge-logo-full.png" alt="TradeBridge Intelligence - Commercial Intelligence. Intelligence We Can Defend.">
+      </div>
+    </section>
+
     <section class="hero">
       <div class="container hero-inner">
         <span class="eyebrow">TradeBridge Commercial Intelligence</span>
