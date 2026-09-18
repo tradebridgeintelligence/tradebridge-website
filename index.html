@@ -4,539 +4,373 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TradeBridge Commercial Intelligence</title>
-  <meta name="description" content="TradeBridge investigates commercial decisions involving customers, markets, suppliers, distributors, partners, channels, geographies, and growth opportunities.">
-  <meta name="theme-color" content="#10283d">
+  <meta name="description" content="TradeBridge investigates important commercial decisions involving customers, markets, competitors, suppliers, distributors, pricing, partnerships, geographies, channels, and growth opportunities before resources are committed.">
+  <meta name="theme-color" content="#061f35">
   <meta property="og:title" content="TradeBridge Commercial Intelligence">
-  <meta property="og:description" content="Before you commit resources, know whether the opportunity deserves pursuit.">
+  <meta property="og:description" content="What we investigate before a business commits resources. Intelligence We Can Defend.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://tradebridgeintelligence.com/">
   <style>
-    :root {
-      --navy: #10283d;
-      --navy-light: #193c58;
-      --blue: #285f82;
-      --cream: #f7f4ed;
-      --white: #ffffff;
-      --ink: #17212a;
-      --muted: #65727d;
-      --line: #d8e0e6;
-      --gold: #b58c4a;
-      --max: 1180px;
+    :root{
+      --navy:#061f35;
+      --navy-2:#082a47;
+      --navy-3:#0c3558;
+      --blue:#27aaf2;
+      --blue-2:#60c8ff;
+      --green:#34d47f;
+      --green-2:#11a860;
+      --ink:#10233a;
+      --muted:#5b6c80;
+      --line:#d9e4ed;
+      --paper:#f7fafc;
+      --white:#fff;
+      --max:1240px;
+      --shadow:0 20px 60px rgba(8,42,71,.12);
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      color: var(--ink);
-      background: var(--white);
-      line-height: 1.6;
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+      color:var(--ink);
+      background:#fff;
+      line-height:1.55;
+      -webkit-font-smoothing:antialiased;
     }
-    a { color: inherit; }
-    .container { width: min(var(--max), calc(100% - 40px)); margin: 0 auto; }
+    a{color:inherit}
+    img{max-width:100%;display:block}
+    svg{display:block}
+    .container{width:min(var(--max),calc(100% - 44px));margin:0 auto}
+    .skip{position:absolute;left:-9999px;top:10px;background:#fff;color:#000;padding:10px 14px;z-index:1000}
+    .skip:focus{left:10px}
 
-    header {
-      background: var(--navy);
-      color: var(--white);
-      position: sticky;
-      top: 0;
-      z-index: 100;
-      border-bottom: 1px solid rgba(255,255,255,.12);
+    header{
+      position:sticky;top:0;z-index:100;
+      background:rgba(5,27,47,.95);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(96,200,255,.28);
+      color:#fff;
     }
-    .nav {
-      min-height: 96px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 30px;
+    .nav{min-height:82px;display:flex;align-items:center;gap:28px}
+    .brand{display:flex;align-items:center;text-decoration:none;flex:0 0 auto}
+    .brand-logo{
+      width:210px;height:60px;overflow:hidden;border-radius:8px;background:#fff;
+      box-shadow:0 4px 20px rgba(0,0,0,.16);
     }
-    .brand {
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      min-width: 0;
-    }
-    .brand-logo {
-      width: 235px;
-      height: 82px;
-      overflow: hidden;
-      flex: 0 0 auto;
-      background: #fff;
-      border: 1px solid rgba(255,255,255,.18);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .brand-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      display: block;
-    }
-    nav ul { list-style: none; display: flex; align-items: center; gap: 25px; }
-    nav a { text-decoration: none; font-size: 14px; color: rgba(255,255,255,.82); }
-    nav a:hover { color: var(--white); }
-    .nav-contact { border: 1px solid rgba(255,255,255,.42); padding: 9px 15px; }
-    a:focus-visible { outline: 2px solid #d2b06f; outline-offset: 4px; }
-    .mobile-contact { display: none; }
+    .brand-logo img{width:100%;height:100%;object-fit:contain}
+    nav{margin-left:auto}
+    nav ul{list-style:none;display:flex;align-items:center;gap:31px}
+    nav a{font-size:14px;text-decoration:none;color:rgba(255,255,255,.86);font-weight:600}
+    nav a:hover{color:#fff}
+    .nav-cta{background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#041f35!important;padding:11px 21px;border-radius:8px;font-weight:800!important}
+    .mobile-contact{display:none;margin-left:auto;background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#041f35;text-decoration:none;font-weight:800;padding:9px 13px;border-radius:7px;font-size:13px}
 
-    .brand-banner {
-      background: #fff;
-      border-bottom: 1px solid var(--line);
+    .hero{
+      position:relative;overflow:hidden;color:#fff;
+      background:
+        radial-gradient(circle at 82% 48%,rgba(51,205,255,.16),transparent 29%),
+        radial-gradient(circle at 70% 20%,rgba(52,212,127,.08),transparent 24%),
+        linear-gradient(135deg,#041a2d 0%,#062844 45%,#05243d 100%);
+      border-bottom:1px solid rgba(96,200,255,.2);
     }
-    .brand-banner-inner {
-      width: min(var(--max), 100%);
-      margin: 0 auto;
-    }
-    .brand-banner img {
-      width: 100%;
-      height: auto;
-      display: block;
-    }
+    .hero:before,.hero:after{content:"";position:absolute;left:-10vw;width:58vw;height:20px;border-radius:50%;transform:rotate(9deg);pointer-events:none}
+    .hero:before{top:95px;border-top:9px solid rgba(39,170,242,.88)}
+    .hero:after{top:127px;border-top:7px solid rgba(52,212,127,.72)}
+    .hero-inner{position:relative;min-height:650px;display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:40px;padding:66px 0 62px}
+    .hero-copy{position:relative;z-index:5;max-width:760px}
+    .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--blue-2);font-weight:800;margin-bottom:15px}
+    h1{font-size:clamp(52px,6.6vw,88px);line-height:.93;letter-spacing:-.055em;font-weight:900;max-width:800px}
+    .gradient-text{color:var(--blue-2)}
+    @supports ((-webkit-background-clip:text) or (background-clip:text)){.gradient-text{background:linear-gradient(90deg,var(--blue-2),#27b6f6 48%,var(--green));-webkit-background-clip:text;background-clip:text;color:transparent}}
+    .hero-subtitle{font-size:clamp(20px,2.4vw,30px);font-weight:800;margin-top:22px;line-height:1.24}
+    .hero-lead{font-size:17px;color:rgba(255,255,255,.82);max-width:660px;margin-top:18px}
+    .hero-actions{display:flex;flex-wrap:wrap;gap:14px;margin-top:28px}
+    .button{display:inline-flex;align-items:center;gap:12px;text-decoration:none;padding:13px 19px;border-radius:8px;font-size:14px;font-weight:800;transition:transform .18s ease,box-shadow .18s ease,background .18s ease}
+    .button:hover{transform:translateY(-2px)}
+    .button-primary{background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#04213a;box-shadow:0 9px 24px rgba(39,170,242,.26)}
+    .button-secondary{border:2px solid rgba(96,200,255,.8);color:#fff;background:rgba(2,24,41,.4)}
+    .arrow{font-size:19px;line-height:1}
 
-    .hero {
-      background: linear-gradient(120deg, rgba(16,40,61,1) 0%, rgba(20,54,79,1) 60%, rgba(35,78,103,1) 100%);
-      color: var(--white);
-      padding: 92px 0 96px;
-    }
-    .hero-inner { max-width: 900px; }
-    .eyebrow {
-      display: inline-block;
-      color: #d2b06f;
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      font-size: 12px;
-      font-weight: 700;
-      margin-bottom: 24px;
-    }
-    h1 {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(46px, 7vw, 78px);
-      line-height: 1.02;
-      letter-spacing: -.035em;
-      max-width: 950px;
-      font-weight: 500;
-    }
-    .hero-lead {
-      max-width: 760px;
-      color: rgba(255,255,255,.81);
-      font-size: clamp(18px, 2.2vw, 23px);
-      line-height: 1.55;
-      margin-top: 30px;
-    }
-    .hero-actions { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 38px; }
-    .button {
-      display: inline-block;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 14px;
-      padding: 14px 22px;
-      transition: .2s ease;
-    }
-    .button-primary { background: var(--white); color: var(--navy); }
-    .button-primary:hover { transform: translateY(-1px); background: var(--cream); }
-    .button-secondary { border: 1px solid rgba(255,255,255,.45); color: var(--white); }
-    .button-secondary:hover { background: rgba(255,255,255,.08); }
-    .motto {
-      margin-top: 58px;
-      padding-top: 24px;
-      border-top: 1px solid rgba(255,255,255,.16);
-      color: rgba(255,255,255,.66);
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: .19em;
-    }
+    .hero-proof{display:grid;grid-template-columns:repeat(3,1fr);gap:0;margin-top:39px;max-width:720px;border-top:1px solid rgba(255,255,255,.17);padding-top:20px}
+    .proof-item{display:flex;align-items:center;gap:12px;padding-right:18px;color:rgba(255,255,255,.84);font-size:13px;font-weight:650}
+    .proof-item+.proof-item{border-left:1px solid rgba(255,255,255,.2);padding-left:20px}
+    .proof-icon{width:34px;height:34px;flex:0 0 34px;color:var(--blue-2)}
+    .proof-item:nth-child(2) .proof-icon{color:var(--green)}
 
-    section { padding: 92px 0; }
-    .section-kicker {
-      text-transform: uppercase;
-      letter-spacing: .16em;
-      color: var(--blue);
-      font-weight: 800;
-      font-size: 12px;
-      margin-bottom: 13px;
+    .hero-art{position:relative;min-height:520px;display:flex;align-items:center;justify-content:center}
+    .globe{position:relative;width:min(42vw,510px);aspect-ratio:1;border-radius:50%;border:1px solid rgba(96,200,255,.36);box-shadow:0 0 70px rgba(39,170,242,.14),inset 0 0 50px rgba(39,170,242,.08);background:
+      radial-gradient(circle at 34% 30%,rgba(92,205,255,.20),transparent 27%),
+      radial-gradient(circle at 67% 66%,rgba(52,212,127,.11),transparent 28%),
+      radial-gradient(circle at 50% 50%,rgba(21,96,150,.14) 0 36%,transparent 37% 100%);
+      overflow:hidden;
     }
-    h2 {
-      font-family: Georgia, "Times New Roman", serif;
-      color: var(--navy);
-      font-size: clamp(34px, 5vw, 52px);
-      line-height: 1.08;
-      letter-spacing: -.025em;
-      font-weight: 500;
-      max-width: 840px;
+    .globe:before{content:"";position:absolute;inset:-8%;border-radius:50%;background:
+      repeating-radial-gradient(ellipse at center,transparent 0 28px,rgba(96,200,255,.18) 29px 30px,transparent 31px 58px),
+      repeating-linear-gradient(90deg,transparent 0 50px,rgba(96,200,255,.11) 51px 52px,transparent 53px 102px);
+      transform:rotate(-13deg) scale(.92);opacity:.85
     }
-    .section-intro { max-width: 770px; margin-top: 20px; color: var(--muted); font-size: 18px; }
+    .globe:after{content:"";position:absolute;inset:8%;border-radius:48% 52% 50% 46%;border:1px solid rgba(96,200,255,.22);transform:rotate(24deg);box-shadow:0 0 40px rgba(39,170,242,.08)}
+    .continent{position:absolute;background:linear-gradient(135deg,rgba(70,184,238,.55),rgba(52,212,127,.26));filter:drop-shadow(0 0 7px rgba(96,200,255,.3));opacity:.72}
+    .c1{width:32%;height:24%;left:24%;top:24%;border-radius:52% 48% 42% 58%/48% 56% 44% 52%;transform:rotate(-10deg)}
+    .c2{width:18%;height:35%;left:45%;top:43%;border-radius:50% 50% 58% 42%/40% 55% 45% 60%;transform:rotate(12deg)}
+    .c3{width:24%;height:18%;left:58%;top:27%;border-radius:46% 54% 40% 60%/56% 45% 55% 44%;transform:rotate(8deg)}
+    .route{position:absolute;border:1px solid rgba(96,200,255,.66);border-color:rgba(96,200,255,.62) transparent transparent transparent;border-radius:50%;transform-origin:center;opacity:.85}
+    .r1{width:68%;height:28%;left:14%;top:37%;transform:rotate(14deg)}
+    .r2{width:55%;height:21%;left:31%;top:49%;transform:rotate(-14deg);border-color:rgba(52,212,127,.54) transparent transparent transparent}
+    .r3{width:49%;height:20%;left:20%;top:27%;transform:rotate(36deg)}
+    .node{position:absolute;width:8px;height:8px;border-radius:50%;background:#fff;box-shadow:0 0 0 4px rgba(96,200,255,.12),0 0 22px rgba(96,200,255,.95)}
+    .n1{left:26%;top:36%}.n2{left:54%;top:28%}.n3{left:68%;top:49%}.n4{left:43%;top:61%}.n5{left:72%;top:66%}.n6{left:34%;top:71%}
+    .hero-art-label{position:absolute;right:-5px;bottom:76px;z-index:4;font-weight:750;font-size:17px;line-height:1.5;letter-spacing:.22em;color:#8bd7ff;text-transform:uppercase;border-bottom:3px solid var(--green);padding-bottom:12px}
 
-    .not-list { background: var(--cream); }
-    .not-list-grid {
-      display: grid;
-      grid-template-columns: .95fr 1.05fr;
-      gap: 75px;
-      align-items: start;
+    .expertise{background:linear-gradient(#f8fbfd,#fff);padding:74px 0 86px}
+    .section-top{display:grid;grid-template-columns:1.12fr .88fr;gap:48px;align-items:end;margin-bottom:32px}
+    .section-kicker{text-transform:uppercase;letter-spacing:.18em;font-size:11px;font-weight:900;color:#46647e;margin-bottom:8px}
+    h2{font-size:clamp(34px,4.5vw,58px);line-height:1.04;letter-spacing:-.035em;color:var(--navy);font-weight:900}
+    .section-lead{color:var(--muted);font-size:17px;max-width:580px;justify-self:end}
+    .expertise-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+    .expert-card{position:relative;background:#fff;border:1px solid #dce7ef;border-radius:10px;padding:22px 20px 20px;min-height:292px;box-shadow:0 8px 26px rgba(8,42,71,.05);transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
+    .expert-card:hover{transform:translateY(-3px);box-shadow:0 18px 38px rgba(8,42,71,.11);border-color:#b9d9ec}
+    .card-top{display:flex;align-items:flex-start;gap:13px;margin-bottom:12px}
+    .icon-wrap{width:48px;height:48px;flex:0 0 48px;border-radius:12px;background:linear-gradient(135deg,#edf8ff,#eefcf5);display:grid;place-items:center;color:var(--navy)}
+    .icon-wrap svg{width:31px;height:31px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+    .expert-card h3{font-size:18px;line-height:1.12;color:var(--navy);font-weight:850;letter-spacing:-.02em;padding-top:2px}
+    .expert-card .tag{font-size:14px;color:#47617a;margin-bottom:13px;min-height:42px}
+    .expert-card ul{padding-left:18px;color:#203a52;font-size:13px;line-height:1.42}
+    .expert-card li{margin-bottom:5px}
+    .expert-card li::marker{color:var(--green)}
+    .card-arrow{position:absolute;right:17px;top:18px;color:var(--blue);font-size:22px}
+
+    .process{padding:82px 0;background:#fff}
+    .process-grid{display:grid;grid-template-columns:.88fr 1.12fr;gap:60px;align-items:start}
+    .process-copy p{margin-top:18px;color:var(--muted);font-size:17px;max-width:520px}
+    .steps{display:grid;gap:14px}
+    .step{display:grid;grid-template-columns:64px 1fr;gap:18px;border:1px solid var(--line);border-radius:10px;padding:20px;background:#fff}
+    .step-num{width:52px;height:52px;border-radius:50%;display:grid;place-items:center;color:#04304f;background:linear-gradient(135deg,var(--blue-2),var(--green));font-weight:900}
+    .step h3{color:var(--navy);font-size:19px;margin-bottom:4px}.step p{color:var(--muted);font-size:14px}
+
+    .standard{position:relative;overflow:hidden;padding:66px 0;background:linear-gradient(135deg,#05243d,#061a2e);color:#fff}
+    .standard:before{content:"";position:absolute;inset:auto -9% -74px 34%;height:180px;border-radius:50%;border-top:3px solid rgba(39,170,242,.28);transform:rotate(-7deg)}
+    .standard-inner{position:relative;z-index:2;display:grid;grid-template-columns:1fr 1.4fr;gap:50px;align-items:center}
+    .standard h2{color:#fff}.standard p{color:rgba(255,255,255,.72);margin-top:13px;max-width:510px}
+    .standards{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+    .standard-item{padding:7px 24px;display:flex;gap:13px;align-items:center;color:rgba(255,255,255,.89);font-size:14px;font-weight:700}
+    .standard-item+.standard-item{border-left:1px solid rgba(255,255,255,.22)}
+    .standard-item svg{width:40px;height:40px;flex:0 0 40px;stroke:var(--blue-2);fill:none;stroke-width:1.8}.standard-item:nth-child(2) svg{stroke:var(--green)}
+
+    .partners{padding:84px 0;background:#f5f9fc}
+    .partners-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:31px}
+    .boundary{background:#fff;border:1px solid var(--line);border-radius:12px;padding:30px;box-shadow:0 8px 26px rgba(8,42,71,.04)}
+    .boundary small{font-size:11px;letter-spacing:.15em;text-transform:uppercase;font-weight:900;color:#4d708d}.boundary h3{font-size:23px;color:var(--navy);line-height:1.15;margin:8px 0 11px}.boundary p{color:var(--muted)}
+    .partner-line{margin-top:24px;padding:20px 22px;border-left:4px solid var(--green);background:#fff;color:var(--navy);font-size:19px;font-weight:800}
+
+    .about{padding:80px 0;background:#fff}.about-grid{display:grid;grid-template-columns:.75fr 1.25fr;gap:70px}.about-label{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:900;color:#4d708d}.about-copy p{font-size:17px;color:var(--muted);margin-bottom:16px}.about-copy strong{color:var(--navy)}
+
+    .contact{padding:78px 0;background:linear-gradient(135deg,#061a2e,#082b48);color:#fff;text-align:center}.contact h2{color:#fff}.contact p{max-width:760px;margin:17px auto 27px;color:rgba(255,255,255,.74);font-size:17px}.contact-email{display:inline-flex;align-items:center;gap:12px;text-decoration:none;background:linear-gradient(90deg,var(--blue-2),var(--blue));color:#041f35;font-weight:900;padding:14px 20px;border-radius:8px}
+
+    footer{background:#041522;color:rgba(255,255,255,.68);padding:28px 0}.footer-inner{display:flex;align-items:center;justify-content:space-between;gap:30px;flex-wrap:wrap}.footer-brand{display:flex;align-items:center;gap:14px}.footer-brand img{width:160px;height:46px;object-fit:contain;background:#fff;border-radius:5px}.footer-links{display:flex;gap:20px;flex-wrap:wrap}.footer-links a{text-decoration:none;font-size:13px}.footer-motto{color:#6fcbff;font-weight:800}
+
+    @media (max-width:1020px){
+      .hero-inner{grid-template-columns:1fr;min-height:auto;padding-top:70px}.hero-art{min-height:420px}.globe{width:min(70vw,500px)}.hero-art-label{right:8%;bottom:30px}
+      .expertise-grid{grid-template-columns:repeat(2,1fr)}.section-top,.standard-inner,.process-grid{grid-template-columns:1fr}.section-lead{justify-self:start}.standards{margin-top:10px}.partners-grid{grid-template-columns:1fr}
     }
-    .questions { border-left: 3px solid var(--gold); padding-left: 28px; }
-    .questions p {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      color: var(--navy);
-      margin-bottom: 17px;
-      line-height: 1.28;
+    @media (max-width:840px){
+      nav ul{display:none}.mobile-contact{display:inline-block}.nav{min-height:74px}.brand-logo{width:180px;height:51px}
+      .hero:before{top:76px}.hero:after{top:106px}.hero-proof{grid-template-columns:1fr;gap:11px}.proof-item+.proof-item{border-left:0;padding-left:0}.proof-item{padding:0}
+      .standard-item{padding:10px 15px}.about-grid{grid-template-columns:1fr;gap:24px}
     }
-
-    .cards {
-      margin-top: 48px;
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1px;
-      background: var(--line);
-      border: 1px solid var(--line);
-    }
-    .card { background: var(--white); padding: 34px 30px 36px; min-height: 230px; }
-    .card-number { color: var(--blue); font-size: 12px; font-weight: 800; letter-spacing: .13em; margin-bottom: 21px; }
-    .card h3 { color: var(--navy); font-size: 20px; margin-bottom: 11px; }
-    .card p { color: var(--muted); font-size: 15px; }
-
-    .process { background: var(--navy); color: var(--white); }
-    .process .section-kicker { color: #d2b06f; }
-    .process h2 { color: var(--white); }
-    .process .section-intro { color: rgba(255,255,255,.68); }
-    .steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 42px; margin-top: 50px; }
-    .step { border-top: 1px solid rgba(255,255,255,.24); padding-top: 24px; }
-    .step span { color: #d2b06f; font-size: 12px; font-weight: 800; letter-spacing: .15em; }
-    .step h3 { font-family: Georgia, "Times New Roman", serif; font-size: 26px; font-weight: 500; margin: 11px 0 13px; }
-    .step p { color: rgba(255,255,255,.68); font-size: 15px; }
-
-    .standard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 70px; align-items: start; }
-    .principles { border-top: 1px solid var(--line); }
-    .principle { padding: 18px 0; border-bottom: 1px solid var(--line); display: flex; gap: 18px; align-items: baseline; }
-    .principle strong { min-width: 145px; color: var(--navy); }
-    .principle span { color: var(--muted); }
-
-    .partners { background: var(--cream); }
-    .boundary { margin-top: 38px; background: var(--white); padding: 38px; border: 1px solid var(--line); }
-    .boundary-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; }
-    .boundary h3 { color: var(--navy); margin-bottom: 10px; font-size: 20px; }
-    .boundary p { color: var(--muted); }
-    .partner-line {
-      margin-top: 30px;
-      color: var(--navy);
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      line-height: 1.35;
-    }
-
-    .about-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: 75px; }
-    .about-label { font-size: 13px; font-weight: 800; color: var(--blue); text-transform: uppercase; letter-spacing: .14em; }
-    .about-copy p { color: var(--muted); font-size: 17px; margin-bottom: 18px; }
-    .about-copy strong { color: var(--navy); }
-
-    .contact { background: #0c2234; color: var(--white); }
-    .contact h2 { color: var(--white); }
-    .contact .section-kicker { color: #d2b06f; }
-    .contact-copy { color: rgba(255,255,255,.72); max-width: 720px; margin-top: 22px; font-size: 18px; }
-    .contact-email {
-      display: inline-block;
-      margin-top: 33px;
-      font-size: clamp(20px, 4vw, 28px);
-      color: var(--white);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(255,255,255,.35);
-      padding-bottom: 4px;
-    }
-    .contact-email:hover { border-color: var(--white); }
-
-    footer { background: #081926; color: rgba(255,255,255,.58); padding: 34px 0; font-size: 13px; }
-    .footer-inner { display: flex; justify-content: space-between; gap: 25px; flex-wrap: wrap; }
-    .footer-motto { color: rgba(255,255,255,.82); letter-spacing: .08em; }
-
-    @media (max-width: 850px) {
-      nav ul { display: none; }
-      .nav { min-height: 84px; gap: 14px; }
-      .brand-logo { width: 200px; height: 70px; }
-      .mobile-contact {
-        display: inline-block;
-        margin-left: auto;
-        color: var(--white);
-        text-decoration: none;
-        border: 1px solid rgba(255,255,255,.42);
-        padding: 8px 12px;
-        font-size: 13px;
-      }
-      .brand-banner-inner { width: 100%; }
-      .hero { padding: 76px 0 78px; }
-      section { padding: 72px 0; }
-      .not-list-grid, .standard-grid, .about-grid, .boundary-grid { grid-template-columns: 1fr; gap: 40px; }
-      .cards { grid-template-columns: 1fr; }
-      .steps { grid-template-columns: 1fr; gap: 30px; }
-      .card { min-height: 0; }
-    }
-
-    @media (max-width: 500px) {
-      .container { width: min(var(--max), calc(100% - 28px)); }
-      .brand-logo { width: 170px; height: 59px; }
-      .mobile-contact { padding: 7px 10px; font-size: 12px; }
-      .contact-email { font-size: 16px; max-width: 100%; overflow-wrap: anywhere; }
-      h1 { font-size: 44px; }
-      .hero-lead { font-size: 18px; }
-      .boundary { padding: 26px; }
-      .principle { display: block; }
-      .principle strong { display: block; margin-bottom: 4px; }
+    @media (max-width:620px){
+      .container{width:min(var(--max),calc(100% - 28px))}.brand-logo{width:151px;height:43px}.mobile-contact{font-size:12px;padding:8px 10px}
+      h1{font-size:49px}.hero-subtitle{font-size:21px}.hero-inner{padding:52px 0 42px}.hero-art{min-height:330px}.globe{width:min(88vw,380px)}.hero-art-label{font-size:13px;right:4%;bottom:14px;letter-spacing:.16em}
+      .expertise{padding:58px 0}.expertise-grid{grid-template-columns:1fr}.expert-card{min-height:0}.section-top{gap:16px}.section-lead{font-size:16px}
+      .standards{grid-template-columns:1fr}.standard-item+.standard-item{border-left:0;border-top:1px solid rgba(255,255,255,.18)}
+      .process,.partners,.about,.contact{padding:62px 0}.step{grid-template-columns:50px 1fr;gap:13px;padding:17px}.step-num{width:44px;height:44px}.footer-inner{align-items:flex-start;flex-direction:column}
     }
   </style>
 </head>
 <body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <svg aria-hidden="true" width="0" height="0" style="position:absolute">
+    <symbol id="i-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="3"/><path d="M3.5 19v-1.2A5.5 5.5 0 0 1 9 12.3a5.5 5.5 0 0 1 5.5 5.5V19"/><circle cx="17.2" cy="9.3" r="2.1"/><path d="M15.2 13.4c2.8-.8 5.3 1.1 5.3 3.8V19"/></symbol>
+    <symbol id="i-chart" viewBox="0 0 24 24"><path d="M4 20V10h4v10M10 20V6h4v14M16 20V3h4v17"/></symbol>
+    <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2.5 12s3.5-5.5 9.5-5.5S21.5 12 21.5 12 18 17.5 12 17.5 2.5 12 2.5 12Z"/><circle cx="12" cy="12" r="2.4"/></symbol>
+    <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.1M12 19.1v2.1M21.2 12h-2.1M4.9 12H2.8M18.5 5.5 17 7M7 17l-1.5 1.5M18.5 18.5 17 17M7 7 5.5 5.5"/><circle cx="12" cy="12" r="7"/></symbol>
+    <symbol id="i-network" viewBox="0 0 24 24"><rect x="9" y="3" width="6" height="5" rx="1"/><rect x="2" y="16" width="6" height="5" rx="1"/><rect x="9" y="16" width="6" height="5" rx="1"/><rect x="16" y="16" width="6" height="5" rx="1"/><path d="M12 8v4M5 16v-4h14v4M12 12v4"/></symbol>
+    <symbol id="i-target" viewBox="0 0 24 24"><circle cx="11" cy="13" r="8"/><circle cx="11" cy="13" r="4"/><path d="m14 10 6-6M16.5 4H20v3.5"/></symbol>
+    <symbol id="i-coins" viewBox="0 0 24 24"><ellipse cx="8" cy="6" rx="5" ry="2.5"/><path d="M3 6v4c0 1.4 2.2 2.5 5 2.5 1.3 0 2.5-.2 3.4-.6M3 10v4c0 1.4 2.2 2.5 5 2.5 1 0 1.9-.1 2.7-.4"/><circle cx="16.5" cy="15.5" r="4.5"/><path d="M16.5 12.9v5.2M14.8 14.1h2.4c.9 0 1.5.5 1.5 1.2s-.6 1.2-1.5 1.2h-1.4c-.9 0-1.5.5-1.5 1.2"/></symbol>
+    <symbol id="i-link" viewBox="0 0 24 24"><path d="m9.5 14.5-2 2a3.5 3.5 0 0 1-5-5l3-3a3.5 3.5 0 0 1 5 0"/><path d="m14.5 9.5 2-2a3.5 3.5 0 0 1 5 5l-3 3a3.5 3.5 0 0 1-5 0"/><path d="m8.5 15.5 7-7"/></symbol>
+    <symbol id="i-evidence" viewBox="0 0 24 24"><path d="M4 20V14h3v6M10 20V9h3v11M16 20V4h3v16"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6"/><path d="m15 15 5 5"/></symbol>
+    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M12 2.5 20 6v5.4c0 5.1-3.3 8.6-8 10.1-4.7-1.5-8-5-8-10.1V6l8-3.5Z"/><path d="m8.4 12.2 2.3 2.3 5-5"/></symbol>
+  </svg>
+
   <header>
     <div class="container nav">
       <a class="brand" href="#top" aria-label="TradeBridge Commercial Intelligence home">
-        <div class="brand-logo">
-          <img src="tradebridge-logo-nav.png" alt="TradeBridge Intelligence — Commercial Intelligence. Intelligence We Can Defend.">
-        </div>
+        <div class="brand-logo"><img src="tradebridge-logo-nav.png" alt="TradeBridge Intelligence"></div>
       </a>
-
-      <nav>
+      <nav aria-label="Primary navigation">
         <ul>
           <li><a href="#investigate">What We Investigate</a></li>
           <li><a href="#process">How It Works</a></li>
           <li><a href="#partners">Referral Partners</a></li>
           <li><a href="#about">About</a></li>
-          <li><a class="nav-contact" href="#contact">Contact</a></li>
+          <li><a class="nav-cta" href="#contact">Contact <span class="arrow">→</span></a></li>
         </ul>
       </nav>
       <a class="mobile-contact" href="#contact">Contact</a>
     </div>
   </header>
 
-  <main id="top">
-    <section class="brand-banner" aria-label="TradeBridge Intelligence brand banner">
-      <div class="brand-banner-inner">
-        <img src="tradebridge-logo-full.png" alt="TradeBridge Intelligence - Commercial Intelligence. Intelligence We Can Defend.">
-      </div>
-    </section>
-
-    <section class="hero">
+  <main id="main">
+    <section class="hero" id="top">
       <div class="container hero-inner">
-        <span class="eyebrow">TradeBridge Commercial Intelligence</span>
-        <h1>Before you commit resources, know whether the opportunity deserves pursuit.</h1>
-        <p class="hero-lead">
-          TradeBridge investigates important commercial decisions involving customers, markets, suppliers,
-          distributors, partners, channels, geographies, expansion opportunities, and other external business questions.
-        </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#contact">Bring Us the Decision</a>
-          <a class="button button-secondary" href="#investigate">See What We Investigate</a>
-        </div>
-        <div class="motto">Intelligence We Can Defend.</div>
-      </div>
-    </section>
-
-    <section class="not-list">
-      <div class="container not-list-grid">
-        <div>
-          <div class="section-kicker">The question before execution</div>
-          <h2>Not another lead list.</h2>
-          <p class="section-intro">
-            Sometimes the important question is not who you can contact. It is which opportunity actually deserves
-            your time, money, capacity, or attention.
-          </p>
+        <div class="hero-copy">
+          <div class="eyebrow">TradeBridge Commercial Intelligence</div>
+          <h1>TradeBridge<br><span class="gradient-text">Commercial Intelligence</span></h1>
+          <p class="hero-subtitle">What we investigate before a business commits resources.</p>
+          <p class="hero-lead">Independent commercial intelligence to help established businesses investigate customers, markets, competitors, suppliers, distributors, pricing, partnerships, geographies, channels, and opportunities before they invest.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#contact">Let's Talk <span class="arrow">→</span></a>
+            <a class="button button-secondary" href="#investigate">See What We Investigate</a>
+          </div>
+          <div class="hero-proof">
+            <div class="proof-item"><svg class="proof-icon" viewBox="0 0 24 24"><use href="#i-evidence"/></svg><span>Evidence over assumptions</span></div>
+            <div class="proof-item"><svg class="proof-icon" viewBox="0 0 24 24"><use href="#i-search"/></svg><span>Unknown remains unknown until verified</span></div>
+            <div class="proof-item"><svg class="proof-icon" viewBox="0 0 24 24"><use href="#i-shield"/></svg><span>Intelligence we can defend</span></div>
+          </div>
         </div>
 
-        <div class="questions">
-          <p>Which customers are actually worth pursuing?</p>
-          <p>Which market deserves expansion?</p>
-          <p>Which supplier is worth depending on?</p>
-          <p>Which distributor or partner genuinely fits?</p>
-          <p>Which attractive-looking opportunity should be rejected?</p>
+        <div class="hero-art" aria-hidden="true">
+          <div class="globe">
+            <div class="continent c1"></div><div class="continent c2"></div><div class="continent c3"></div>
+            <div class="route r1"></div><div class="route r2"></div><div class="route r3"></div>
+            <span class="node n1"></span><span class="node n2"></span><span class="node n3"></span><span class="node n4"></span><span class="node n5"></span><span class="node n6"></span>
+          </div>
+          <div class="hero-art-label">Clearer<br>questions.<br>Stronger<br>decisions.</div>
         </div>
       </div>
     </section>
 
-    <section id="investigate">
+    <section class="expertise" id="investigate">
       <div class="container">
-        <div class="section-kicker">What we investigate</div>
-        <h2>Commercial unknowns around decisions that matter.</h2>
-        <p class="section-intro">
-          TradeBridge is built for smaller established businesses that need evidence before committing resources
-          but may not have a dedicated internal commercial-intelligence team.
-        </p>
+        <div class="section-top">
+          <div>
+            <div class="section-kicker">Our expertise</div>
+            <h2>Intelligence for Smarter, Safer Growth.</h2>
+          </div>
+          <p class="section-lead">We deliver independent, fact-based commercial intelligence across the key areas that matter most before a business commits resources.</p>
+        </div>
 
-        <div class="cards">
-          <article class="card">
-            <div class="card-number">01</div>
-            <h3>Customers &amp; Prospects</h3>
-            <p>Which accounts deserve pursuit, which should be deprioritized, and what evidence argues against spending sales time on them.</p>
+        <div class="expertise-grid">
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-users"/></svg></div><h3>Customer &amp;<br>Prospect Intelligence</h3></div>
+            <p class="tag">Find the right customers. For the right reasons.</p>
+            <ul><li>Identify and qualify target customer segments</li><li>Build and screen prospect universes</li><li>Map decision-makers and buying committees</li><li>Find evidence that supports — or challenges — pursuit</li></ul>
           </article>
-
-          <article class="card">
-            <div class="card-number">02</div>
-            <h3>Markets &amp; Geographies</h3>
-            <p>Where demand, competition, commercial fit, and practical realities support expansion - and where they do not.</p>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-chart"/></svg></div><h3>Market &amp;<br>Industry Research</h3></div>
+            <p class="tag">Understand the market before you move.</p>
+            <ul><li>Market size and growth evidence</li><li>Key drivers and constraints</li><li>Emerging opportunities and risks</li><li>Market-entry and expansion considerations</li></ul>
           </article>
-
-          <article class="card">
-            <div class="card-number">03</div>
-            <h3>Suppliers &amp; Sourcing</h3>
-            <p>Which counterparties warrant deeper consideration, what is verifiable, and what risk or weakness remains unresolved.</p>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-eye"/></svg></div><h3>Competitive<br>Intelligence</h3></div>
+            <p class="tag">See the full landscape.</p>
+            <ul><li>Identify and profile key competitors</li><li>Analyze positioning, strengths, and weaknesses</li><li>Track product, pricing, and go-to-market moves</li><li>Find whitespace and differentiation opportunities</li></ul>
           </article>
-
-          <article class="card">
-            <div class="card-number">04</div>
-            <h3>Channels, Distributors &amp; Partners</h3>
-            <p>Which relationships could realistically help reach the market and whether the proposed commercial fit stands up to evidence.</p>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-gear"/></svg></div><h3>Supplier &amp;<br>Sourcing Intelligence</h3></div>
+            <p class="tag">Stronger supply chains start with better information.</p>
+            <ul><li>Identify and evaluate suppliers</li><li>Assess capability, capacity, and reliability</li><li>Analyze pricing, lead times, and risk factors</li><li>Find alternative or redundant sources</li></ul>
           </article>
-
-          <article class="card">
-            <div class="card-number">05</div>
-            <h3>Competitive Landscape</h3>
-            <p>What competitors, alternatives, market structure, and outside signals actually mean for the decision in front of management.</p>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-network"/></svg></div><h3>Channel &amp;<br>Distribution Research</h3></div>
+            <p class="tag">Get your product to market more effectively.</p>
+            <ul><li>Identify distributors, resellers, and channel partners</li><li>Evaluate channel fit and coverage</li><li>Analyze partner requirements and incentives</li><li>Find gaps and untapped channel opportunities</li></ul>
           </article>
-
-          <article class="card">
-            <div class="card-number">06</div>
-            <h3>Capacity-to-Market</h3>
-            <p>When a business adds production, warehouse, service, or distribution capacity, which outside demand deserves that capacity first?</p>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-target"/></svg></div><h3>Opportunity &amp;<br>Expansion Support</h3></div>
+            <p class="tag">Investigate before you invest.</p>
+            <ul><li>Evaluate new product or service opportunities</li><li>Screen geographies for expansion</li><li>Assess partnership and acquisition targets</li><li>Provide clear pursue / hold / no-go recommendations</li></ul>
+          </article>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-coins"/></svg></div><h3>Pricing<br>Intelligence</h3></div>
+            <p class="tag">Price with context.</p>
+            <ul><li>Understand market pricing and value positioning</li><li>Analyze margin pressure and price sensitivity</li><li>Identify deal structures and commercial terms</li><li>Support pricing decisions with external evidence</li></ul>
+          </article>
+          <article class="expert-card">
+            <span class="card-arrow">→</span><div class="card-top"><div class="icon-wrap"><svg viewBox="0 0 24 24"><use href="#i-link"/></svg></div><h3>Partnership<br>Intelligence</h3></div>
+            <p class="tag">Find the right partners. Reduce the wrong ones.</p>
+            <ul><li>Assess partner fit and strategic alignment</li><li>Identify potential conflicts</li><li>Evaluate track record and credibility</li><li>Support commercial due diligence before commitment</li></ul>
           </article>
         </div>
       </div>
     </section>
 
-    <section id="process" class="process">
-      <div class="container">
-        <div class="section-kicker">How TradeBridge works</div>
-        <h2>Start with the decision. Investigate both sides.</h2>
-        <p class="section-intro">
-          The objective is not to generate information for its own sake. The objective is to make a specific commercial decision more defensible.
-        </p>
-
+    <section class="process" id="process">
+      <div class="container process-grid">
+        <div class="process-copy">
+          <div class="section-kicker">How TradeBridge works</div>
+          <h2>Start with the decision. Investigate both sides.</h2>
+          <p>The objective is not to generate information for its own sake. The objective is to make a specific commercial decision more defensible.</p>
+        </div>
         <div class="steps">
-          <article class="step">
-            <span>STEP 01</span>
-            <h3>Define the decision</h3>
-            <p>We establish what management actually needs to decide, what is already known, what remains uncertain, and what evidence would materially change the choice.</p>
-          </article>
-
-          <article class="step">
-            <span>STEP 02</span>
-            <h3>Investigate both sides</h3>
-            <p>We look for evidence supporting the opportunity and evidence against it. Weak evidence does not become strong evidence because it supports the desired answer.</p>
-          </article>
-
-          <article class="step">
-            <span>STEP 03</span>
-            <h3>Make it defensible</h3>
-            <p>We separate what is verified, what remains unknown, what deserves pursuit, what should be rejected, and what must be verified before resources are committed.</p>
-          </article>
+          <article class="step"><div class="step-num">01</div><div><h3>Define the decision</h3><p>Establish what management actually needs to decide, what is known, what remains uncertain, and what evidence would materially change the choice.</p></div></article>
+          <article class="step"><div class="step-num">02</div><div><h3>Investigate for and against</h3><p>Look for supporting evidence and counterevidence. A signal does not become an opportunity merely because it supports the desired answer.</p></div></article>
+          <article class="step"><div class="step-num">03</div><div><h3>Make the recommendation defensible</h3><p>Separate what is verified, what remains unknown, what deserves pursuit, what should be rejected, and what must be verified before commitment.</p></div></article>
         </div>
       </div>
     </section>
 
-    <section>
-      <div class="container standard-grid">
-        <div>
-          <div class="section-kicker">Our standard</div>
-          <h2>Intelligence We Can Defend.</h2>
-          <p class="section-intro">TradeBridge is built around evidence discipline rather than confident-sounding conclusions.</p>
-        </div>
-
-        <div class="principles">
-          <div class="principle">
-            <strong>Evidence first.</strong>
-            <span>Claims should be tied to evidence that can be examined, challenged, and traced.</span>
-          </div>
-          <div class="principle">
-            <strong>Unknown stays unknown.</strong>
-            <span>When the evidence does not establish something, we do not fill the gap with a guess.</span>
-          </div>
-          <div class="principle">
-            <strong>Negative evidence matters.</strong>
-            <span>A reason not to pursue an opportunity can be as valuable as a reason to pursue it.</span>
-          </div>
-          <div class="principle">
-            <strong>Signal is not opportunity.</strong>
-            <span>A promising event, announcement, expansion, or trend does not automatically create a worthwhile commercial move.</span>
-          </div>
-          <div class="principle">
-            <strong>Know the boundary.</strong>
-            <span>When the real problem belongs with another specialist, TradeBridge should stop.</span>
-          </div>
+    <section class="standard" aria-labelledby="standard-title">
+      <div class="container standard-inner">
+        <div><div class="section-kicker" style="color:#7acfff">Our standard</div><h2 id="standard-title">Evidence. Objectivity. Clarity.</h2><p>Different questions. Same standard. We apply a rigorous, transparent process so management can make commercial decisions with confidence.</p></div>
+        <div class="standards">
+          <div class="standard-item"><svg viewBox="0 0 24 24"><use href="#i-evidence"/></svg><span>Evidence over assumptions</span></div>
+          <div class="standard-item"><svg viewBox="0 0 24 24"><use href="#i-search"/></svg><span>Unknown remains unknown until verified</span></div>
+          <div class="standard-item"><svg viewBox="0 0 24 24"><use href="#i-shield"/></svg><span>Scope may change. Standard does not.</span></div>
         </div>
       </div>
     </section>
 
-    <section id="partners" class="partners">
+    <section class="partners" id="partners">
       <div class="container">
-        <div class="section-kicker">For referral partners</div>
+        <div class="section-kicker">Referral partners</div>
         <h2>Know where your expertise stops. We do too.</h2>
-        <p class="section-intro">TradeBridge works alongside specialists whose expertise begins where ours ends.</p>
-
-        <div class="boundary">
-          <div class="boundary-grid">
-            <div>
-              <h3>When TradeBridge should stop</h3>
-              <p>
-                If our research shows that the real issue is internal operations, accounting, financing, legal, HR,
-                recruiting, technology implementation, logistics, compliance, or another specialist discipline,
-                we should not stretch the assignment to keep the work.
-              </p>
-            </div>
-
-            <div>
-              <h3>When TradeBridge may begin</h3>
-              <p>
-                When another professional reaches the point where the unresolved question becomes which market,
-                customer, supplier, distributor, partner, channel, geography, or commercial opportunity deserves pursuit,
-                that may be our lane.
-              </p>
-            </div>
-          </div>
-
-          <div class="partner-line">
-            We would rather prove one clean handoff than manufacture a partnership on paper.
-          </div>
+        <p class="section-lead" style="justify-self:start;margin-top:14px">TradeBridge works alongside specialists whose expertise begins where ours ends.</p>
+        <div class="partners-grid">
+          <article class="boundary"><small>TradeBridge stops</small><h3>When the remaining problem is execution.</h3><p>If the evidence shows the real issue is legal, accounting, financing, operations, technology implementation, recruiting, logistics, compliance, or another specialist discipline, we should not stretch the assignment to keep the work.</p></article>
+          <article class="boundary"><small>TradeBridge begins</small><h3>When the unresolved question is external and commercial.</h3><p>Which market, customer, supplier, distributor, partner, channel, geography, pricing context, or commercial opportunity deserves pursuit before the business commits resources?</p></article>
         </div>
+        <div class="partner-line">We would rather prove one clean handoff than manufacture a partnership on paper.</div>
       </div>
     </section>
 
-    <section id="about">
+    <section class="about" id="about">
       <div class="container about-grid">
-        <div><div class="about-label">About TradeBridge</div></div>
-
+        <div class="about-label">About TradeBridge</div>
         <div class="about-copy">
-          <p>
-            <strong>TradeBridge Commercial Intelligence</strong> was built for businesses facing important outside commercial decisions
-            without necessarily having a dedicated internal intelligence team.
-          </p>
-          <p>
-            Founder <strong>Joshua Nichols</strong> works directly on engagements using structured research, source verification,
-            opposing evidence, explicit uncertainty controls, and decision-focused analysis.
-          </p>
-          <p>
-            TradeBridge is not automatically the technical expert in a client's industry. Our responsibility is the commercial intelligence
-            surrounding the decision - and knowing when the question belongs with somebody else.
-          </p>
+          <p><strong>TradeBridge Commercial Intelligence</strong> was built for established businesses facing important outside commercial decisions without necessarily having a dedicated internal commercial-intelligence team.</p>
+          <p>Founder <strong>Joshua Nichols</strong> works directly on engagements using structured research, source verification, counterevidence, explicit uncertainty controls, and decision-focused analysis.</p>
+          <p>TradeBridge is not automatically the technical expert in a client's industry. Our responsibility is the commercial intelligence surrounding the decision — and knowing when the question belongs with somebody else.</p>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="contact">
+    <section class="contact" id="contact">
       <div class="container">
-        <div class="section-kicker">Start here</div>
+        <div class="section-kicker" style="color:#7acfff">Start here</div>
         <h2>Bring us the decision.</h2>
-        <p class="contact-copy">
-          Tell us what your business is considering, what you already know, and what you still cannot answer confidently.
-          If it belongs with TradeBridge, we will explain how we would investigate it. If it does not, we will tell you that too.
-        </p>
-
-        <a class="contact-email" href="mailto:jnichols@tradebridgeintelligence.com?subject=Commercial%20Decision%20Inquiry">
-          jnichols@tradebridgeintelligence.com
-        </a>
+        <p>Tell us what your business is considering, what you already know, and what you still cannot answer confidently. If it belongs with TradeBridge, we will explain how we would investigate it. If it does not, we will tell you that too.</p>
+        <a class="contact-email" href="mailto:jnichols@tradebridgeintelligence.com?subject=Commercial%20Decision%20Inquiry">jnichols@tradebridgeintelligence.com <span class="arrow">→</span></a>
       </div>
     </section>
   </main>
 
   <footer>
     <div class="container footer-inner">
-      <div>&copy; 2026 TradeBridge Commercial Intelligence</div>
+      <div class="footer-brand"><img src="tradebridge-logo-nav.png" alt="TradeBridge Intelligence"><span>© 2026 TradeBridge Commercial Intelligence</span></div>
+      <div class="footer-links"><a href="#investigate">What We Investigate</a><a href="#process">How It Works</a><a href="#partners">Referral Partners</a><a href="#about">About</a><a href="#contact">Contact</a></div>
       <div class="footer-motto">Intelligence We Can Defend.</div>
     </div>
   </footer>
