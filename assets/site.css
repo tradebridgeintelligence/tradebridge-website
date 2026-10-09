@@ -47,3 +47,76 @@ body::before{content:"";display:block;width:100%;height:min(25vw,255px);min-heig
 @media(max-width:1010px){.site-header .nav-menu{background:#092a47;border-top:1px solid #275475;box-shadow:0 15px 22px rgba(2,20,35,.35)}.site-header .nav-menu a{color:#f1f8fc;border-bottom-color:#244661}.original-hero-copy{width:65%}.original-globe{width:62%;opacity:.75}}
 @media(max-width:760px){.original-hero-copy{width:100%;max-width:650px;padding:63px 0 47px}.original-hero-inner{min-height:630px}.hero.original-graphic{min-height:630px}.original-globe{width:80%;right:-27%;top:70px;opacity:.32;object-position:center}.original-graphic .triad-title{font-size:clamp(3.5rem,10vw,5.2rem)}.hero.original-graphic:before{left:-180px;top:20px}.hero.original-graphic:after{left:-180px;top:45px}}
 @media(max-width:520px){.original-graphic .triad-title{font-size:clamp(3.15rem,12.6vw,4.3rem)}.original-hero-copy{padding:52px 0 43px}.original-graphic .lead{font-size:.99rem;line-height:1.58}.original-graphic .actions{align-items:stretch}.original-graphic .actions .btn{width:100%}.original-proof{grid-template-columns:1fr;gap:10px;padding-top:14px;margin-top:24px}.original-proof-item{min-height:35px;padding:0!important;border:0!important}.original-proof-icon{width:31px;height:31px}.original-proof-icon svg{width:26px;height:26px}.hero.original-graphic{min-height:unset}.original-hero-inner{min-height:unset}.original-graphic .original-hero-kicker{font-size:.64rem;margin-bottom:22px}}
+
+
+/* TradeBridge final header integration v1.1, approved by Joshua.
+   Preserve the existing full TradeBridge source artwork. The visual crop is
+   restricted to the logo/text region so the wordmark is legible in a compact
+   white badge; no source-image colors, wording or geometry are modified. */
+body::before{content:none!important;display:none!important;height:0!important;min-height:0!important}
+.site-header .header-inner{min-height:146px;padding-block:7px;gap:17px}
+.site-header .brand{
+  display:block!important;
+  position:relative;
+  flex:0 0 326px;
+  width:326px!important;
+  min-width:326px;
+  max-width:326px;
+  height:132px;
+  min-height:132px;
+  padding:0!important;
+  margin:0;
+  overflow:hidden;
+  border:1px solid #dce7eb;
+  border-radius:2px;
+  background-color:#fff;
+  background-image:url("/tradebridge-logo-full.png");
+  background-repeat:no-repeat;
+  background-size:748px auto;
+  background-position:-310px -13px;
+  box-shadow:0 5px 16px rgba(0,0,0,.15);
+}
+.site-header .brand img{display:none!important;filter:none!important}
+.site-header .nav-menu{min-width:0;gap:clamp(9px,1.05vw,16px)}
+.site-header .nav-menu a{font-size:clamp(.735rem,.85vw,.83rem)}
+.site-header .nav-menu .nav-action{padding:12px 14px;min-height:44px;display:inline-flex;align-items:center}
+@media(max-width:1240px){
+ .site-header .menu-toggle{display:inline-flex;align-items:center;justify-content:center}
+ .site-header .nav-menu{
+    display:none;position:absolute;top:100%;left:0;right:0;
+    max-height:calc(100dvh - 146px);overflow:auto;
+    padding:20px max(24px,calc((100% - var(--max))/2));
+    background:#092a47;box-shadow:0 15px 22px rgba(2,20,35,.35);
+    border-top:1px solid #275475;
+    flex-direction:column;align-items:stretch;gap:0
+ }
+ .site-header .nav-menu.is-open{display:flex}
+ .site-header .nav-menu a{font-size:1rem;padding:12px 8px;border-bottom:1px solid #244661;color:#f1f8fc}
+ .site-header .nav-menu .nav-action{display:flex;padding:13px 15px;justify-content:center;text-align:center;margin-top:15px;border:0;color:#061f35}
+}
+@media(max-width:760px){
+ .site-header .header-inner{min-height:116px;padding-block:7px}
+ .site-header .brand{
+   flex-basis:241px;width:241px!important;min-width:241px;max-width:241px;
+   height:98px;min-height:98px;
+   background-size:553px auto;background-position:-230px -10px
+ }
+ .site-header .nav-menu{max-height:calc(100dvh - 116px)}
+}
+@media(max-width:520px){
+ .site-header .header-inner{min-height:100px;padding-block:7px}
+ .site-header .brand{
+   flex-basis:203px;width:203px!important;min-width:203px;max-width:203px;
+   height:83px;min-height:83px;
+   background-size:467px auto;background-position:-194px -8px
+ }
+ .site-header .nav-menu{max-height:calc(100dvh - 100px)}
+}
+@media(max-width:340px){
+ .site-header .brand{
+   flex-basis:184px;width:184px!important;min-width:184px;max-width:184px;
+   height:78px;min-height:78px;
+   background-size:430px auto;background-position:-179px -7px
+ }
+ .site-header .header-inner{gap:8px}
+}
