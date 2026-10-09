@@ -120,3 +120,15 @@ body::before{content:none!important;display:none!important;height:0!important;mi
  }
  .site-header .header-inner{gap:8px}
 }
+
+
+/* WCAG small-text contrast corrections: leave the APPROVED brand teal/green
+   values for graphics, buttons and the globe hero; use darker ink variants
+   only where small text sits on white/light backgrounds. */
+a{color:#006b74}
+.eyebrow,.page-hero .label-line,.insight-type{color:#006b74}
+.division-card:nth-child(2) .division-label{color:#006b74}
+.division-card:nth-child(3) .division-label{color:#196e4d}
+.page-hero .crumb a{color:#006b74}
+.dark-bg .eyebrow{color:#8ce6e1}
+.original-graphic .original-hero-kicker{color:#8ce6e1}

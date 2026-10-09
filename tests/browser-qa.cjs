@@ -72,7 +72,7 @@ fs.mkdirSync(captures,{recursive:true});
    if(['start/','ventures/','commercial-intelligence/','business-operations/'].includes(route)){
      const report=await new AxeBuilder({page}).withTags(['wcag2a','wcag2aa','wcag21a','wcag21aa']).analyze();
      const severe=report.violations.filter(v=>['serious','critical'].includes(v.impact));
-     if(severe.length)failed.push('Serious a11y violations on '+route+': '+severe.map(v=>v.id+' '+v.nodes.length).join(', '));
+     if(severe.length){for(const violation of severe){console.error('AXE '+route+' '+violation.id+': '+violation.nodes.slice(0,8).map(n=>n.target.join(' ')+' / '+String(n.failureSummary||'').replace(/\s+/g,' ').slice(0,220)).join(' | '))}failed.push('Serious a11y violations on '+route+': '+severe.map(v=>v.id+' '+v.nodes.length).join(', '))}
    }
    await page.close();
    await context.close();

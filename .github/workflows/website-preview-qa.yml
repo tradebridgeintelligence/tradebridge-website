@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - website-modernization-v1-approved
-  pull_request:
-    branches:
-      - main
 
 permissions:
   contents: read
