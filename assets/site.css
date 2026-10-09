@@ -5,3 +5,45 @@
 @media(max-width:760px){.container{width:min(calc(100% - 36px),var(--max))}.section{padding:68px 0}.section-sm{padding:48px 0}.header-inner{min-height:75px}.nav-menu{max-height:calc(100dvh - 75px)}.brand img{width:190px;max-height:55px}.hero{padding:74px 0}.hero-grid,.standard-grid,.story-columns{grid-template-columns:1fr;gap:33px}.hero-aside{max-width:520px}.cards-3,.cards-2,.statements{grid-template-columns:1fr}.division-card{min-height:unset}.process-strip{grid-template-columns:repeat(2,minmax(0,1fr))}.cta-panel{display:block;padding:35px 27px}.cta-panel .btn{margin-top:21px}.page-hero{padding:61px 0 51px}.form-panel{padding:27px 22px}.footer-top{grid-template-columns:1fr 1fr;gap:35px}.footer-top>div:first-child{grid-column:1/-1}}
 @media(max-width:520px){.hero h1{font-size:clamp(2.55rem,12vw,4rem)}h2{font-size:2rem}.process-strip{grid-template-columns:1fr}.newsletter-form{display:block}.newsletter-form button{margin-top:13px}.form-grid{grid-template-columns:1fr}.field-wide{grid-column:auto}.footer-top{grid-template-columns:1fr}.footer-top>div:first-child{grid-column:auto}.actions{align-items:stretch}.actions .btn{width:100%}.cta-panel .btn{width:100%}.form-submit{width:100%}}
 @media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
+
+
+/* Preview styling per Joshua: original globe, navy/blue/green and exact full logo.
+   The approved three-division architecture and site content stay unchanged. */
+body::before{content:"";display:block;width:100%;height:min(25vw,255px);min-height:75px;background:#fff url("/tradebridge-logo-full.png") center center/contain no-repeat;border-bottom:1px solid #e0eaf0}
+.site-header{background:#061f35;color:#fff;border-bottom:1px solid rgba(100,202,255,.35);backdrop-filter:none}
+.site-header .nav-menu a{color:#e7f3fa}
+.site-header .nav-menu a:hover,.site-header .nav-menu a[aria-current="page"]{color:#75d4ff}
+.site-header .nav-menu .nav-action{background:#40b9f5;color:#061f35}
+.site-header .nav-menu .nav-action:hover,.site-header .nav-menu .nav-action[aria-current="page"]{background:#79d6ff;color:#061f35}
+.site-header .brand img{filter:brightness(0) invert(1)}
+.site-header .menu-toggle{background:#123d60;border-color:#477b9a;color:#fff}
+.hero.original-graphic{min-height:585px;padding:0;overflow:hidden;color:#fff;background:linear-gradient(112deg,#061d31 0%,#07365a 56%,#062a49 100%);border-bottom:3px solid #0b587b;isolation:isolate}
+.hero.original-graphic:before,.hero.original-graphic:after{content:"";position:absolute;left:-120px;right:auto;width:1130px;height:145px;border-radius:50%;transform:rotate(7deg);pointer-events:none;box-shadow:none;z-index:1}
+.hero.original-graphic:before{top:42px;border-top:10px solid #1f94dc}
+.hero.original-graphic:after{top:76px;border-top:8px solid #2a9d6f}
+.original-globe{position:absolute;z-index:0;right:-38px;top:-7px;width:61%;height:calc(100% + 14px);object-fit:cover;object-position:center;opacity:.94;pointer-events:none;-webkit-mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.25) 8%,#000 22%,#000 100%);mask-image:linear-gradient(to right,transparent 0%,rgba(0,0,0,.25) 8%,#000 22%,#000 100%)}
+.original-hero-inner{position:relative;z-index:2;min-height:585px;display:flex;align-items:center}
+.original-hero-copy{position:relative;max-width:760px;width:59%;padding:64px 0 46px}
+.original-graphic .original-hero-kicker{color:#6fd0ff;letter-spacing:.15em;font-size:.73rem;margin-bottom:24px;font-weight:830}
+.original-graphic .triad-title{color:#fff;font-size:clamp(3.8rem,6.5vw,6.4rem);line-height:.91;margin-bottom:27px;font-weight:900;letter-spacing:-.055em;max-width:680px}
+.original-graphic .triad-title span{display:block}
+.original-graphic .triad-title span:first-child{color:#fff}
+.original-graphic .triad-title span:nth-child(2){color:#60c8ff}
+.original-graphic .triad-title span:nth-child(3){color:#41d57b}
+.original-graphic .lead{color:#e5f1f8;font-size:1.045rem;line-height:1.61;max-width:620px;margin-bottom:0}
+.original-graphic .actions{margin-top:27px;gap:14px}
+.original-graphic .btn{border-radius:7px;min-height:47px}
+.original-graphic .btn-primary{color:#061f35;background:linear-gradient(90deg,#67cbff,#36aef1);border-color:#58bff3;font-weight:850}
+.original-graphic .btn-primary:hover{background:#a2e1ff;border-color:#a2e1ff;color:#061f35}
+.original-graphic .btn-outline{background:rgba(4,26,45,.34);border:2px solid #6ac8f8;color:#fff}
+.original-graphic .btn-outline:hover{background:#173e59;border-color:#9bdbff;color:#fff}
+.original-proof{display:grid;grid-template-columns:repeat(3,1fr);gap:0;max-width:680px;margin-top:31px;padding-top:20px;border-top:1px solid rgba(255,255,255,.23)}
+.original-proof-item{display:flex;align-items:center;gap:10px;min-height:48px;color:#eaf3f9;font-size:.79rem;line-height:1.45;font-weight:720;padding-right:12px}
+.original-proof-item+.original-proof-item{border-left:1px solid rgba(255,255,255,.23);padding-left:17px}
+.original-proof-icon{color:#50bdff;flex:none;width:34px;height:34px;display:grid;place-items:center}
+.original-proof-icon svg{width:31px;height:31px}
+.original-proof-item:nth-child(2) .original-proof-icon{color:#41d57b}
+.original-graphic+#three-divisions{background:linear-gradient(#f7fbfd,#fff)}
+@media(max-width:1010px){.site-header .nav-menu{background:#092a47;border-top:1px solid #275475;box-shadow:0 15px 22px rgba(2,20,35,.35)}.site-header .nav-menu a{color:#f1f8fc;border-bottom-color:#244661}.original-hero-copy{width:65%}.original-globe{width:62%;opacity:.75}}
+@media(max-width:760px){.original-hero-copy{width:100%;max-width:650px;padding:63px 0 47px}.original-hero-inner{min-height:630px}.hero.original-graphic{min-height:630px}.original-globe{width:80%;right:-27%;top:70px;opacity:.32;object-position:center}.original-graphic .triad-title{font-size:clamp(3.5rem,10vw,5.2rem)}.hero.original-graphic:before{left:-180px;top:20px}.hero.original-graphic:after{left:-180px;top:45px}}
+@media(max-width:520px){.original-graphic .triad-title{font-size:clamp(3.15rem,12.6vw,4.3rem)}.original-hero-copy{padding:52px 0 43px}.original-graphic .lead{font-size:.99rem;line-height:1.58}.original-graphic .actions{align-items:stretch}.original-graphic .actions .btn{width:100%}.original-proof{grid-template-columns:1fr;gap:10px;padding-top:14px;margin-top:24px}.original-proof-item{min-height:35px;padding:0!important;border:0!important}.original-proof-icon{width:31px;height:31px}.original-proof-icon svg{width:26px;height:26px}.hero.original-graphic{min-height:unset}.original-hero-inner{min-height:unset}.original-graphic .original-hero-kicker{font-size:.64rem;margin-bottom:22px}}
