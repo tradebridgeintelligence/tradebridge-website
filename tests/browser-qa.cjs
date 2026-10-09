@@ -51,7 +51,8 @@ fs.mkdirSync(captures,{recursive:true});
    await page.close();
   }
   for(const route of ['commercial-intelligence/','business-operations/','ventures/','how-tradebridge-works/','insights/','about/','start/']){
-   const page=await browser.newPage({viewport:{width:1366,height:900}});
+   const context=await browser.newContext({viewport:{width:1366,height:900}});
+   const page=await context.newPage();
    const response=await page.goto(base+'/'+route,{waitUntil:'networkidle'});
    if(response.status()!==200)failed.push('Page HTTP '+response.status()+' at /'+route);
    if((await page.locator('main h1').count())!==1)failed.push('H1 count on /'+route);
@@ -74,6 +75,7 @@ fs.mkdirSync(captures,{recursive:true});
      if(severe.length)failed.push('Serious a11y violations on '+route+': '+severe.map(v=>v.id+' '+v.nodes.length).join(', '));
    }
    await page.close();
+   await context.close();
    tested++;
   }
  }finally{await browser.close()}
