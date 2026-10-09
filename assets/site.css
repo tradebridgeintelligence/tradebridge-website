@@ -132,3 +132,10 @@ a{color:#006b74}
 .page-hero .crumb a{color:#006b74}
 .dark-bg .eyebrow{color:#8ce6e1}
 .original-graphic .original-hero-kicker{color:#8ce6e1}
+
+
+/* CTA contrast correction for WCAG AA: small white button labels need at
+   least 4.5:1. Keep the approved #008C95 in brand/accent contexts while using
+   a darker TradeBridge teal for filled actions on light surfaces. */
+.btn-primary{background:#006b74;border-color:#006b74;color:#fff}
+.btn-primary:hover{background:#00565d;border-color:#00565d;color:#fff}
