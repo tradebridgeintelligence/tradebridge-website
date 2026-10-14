@@ -26,7 +26,7 @@ test('static release excludes API, private data and deployment configuration',()
  cp.execFileSync(process.execPath,[path.join(root,'scripts/build-render-static.cjs')],{env});
  for(const p of ['index.html','start/index.html','ventures/index.html','assets/site.js','assets/site-config.js'])assert.equal(fs.existsSync(path.join(dst,p)),true,p);
  for(const p of ['api/_common.js','intake-service','vercel.json','.github','tests','CNAME'])assert.equal(fs.existsSync(path.join(dst,p)),false,p);
- const cfg=fs.readFileSync(path.join(dst,'assets/site-config.js'),'utf8');assert.match(cfg,/intakeApiBaseUrl:""/);
+ const cfg=fs.readFileSync(path.join(dst,'assets/site-config.js'),'utf8');assert.match(cfg,/"intakeApiBaseUrl":""/);
 });
 test('production build refuses missing API destination',()=>{
  const env={...process.env,TRADEBRIDGE_BUILD_TARGET:'production',TRADEBRIDGE_INTAKE_API_BASE_URL:''};

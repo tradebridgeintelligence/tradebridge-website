@@ -18,4 +18,6 @@ test('intake rejects forged origins',async()=>{const r=await invoke(intake,valid
 test('intake rejects honeypot',async()=>{const r=await invoke(intake,{...valid,website_fax:'spam'});assert.equal(r.code,400)});
 test('intake fails closed without secure receiver',async()=>{const r=await invoke(intake,valid);assert.equal(r.code,503);assert.equal(r.payload.accepted,false)});
 test('newsletter rejects missing opt-in',async()=>{const r=await invoke(newsletter,{email:'work@example.com',consent:false});assert.equal(r.code,422)});
-test('newsletter fails closed without secure receiver',async()=>{const r=await invoke(newsletter,{email:'work@example.com',consent:true});assert.equal(r.code,503);assert.equal(r.payload.accepted,false)});
+test('newsletter fails closed without secure receiver',async()=>{const r=await invoke(newsletter,{email:'work@example.com',consent:true,client_submission_id:'test-newsletter-id-0001'});assert.equal(r.code,503);assert.equal(r.payload.accepted,false)});
+
+test('newsletter requires a stable idempotency identity',async()=>{const r=await invoke(newsletter,{email:'work@example.com',consent:true});assert.equal(r.code,422);assert.equal(r.payload.error,'submission_identity_required')});
