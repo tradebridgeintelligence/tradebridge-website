@@ -20,4 +20,15 @@ for(const file of files)fs.copyFileSync(path.join(root,file),path.join(dest,file
 for(const dir of dirs)fs.cpSync(path.join(root,dir),path.join(dest,dir),{recursive:true});
 const cfg={intakeApiBaseUrl:api,ga4MeasurementId:measurement};
 fs.writeFileSync(path.join(dest,'assets','site-config.js'),'window.TRADEBRIDGE_CONFIG='+JSON.stringify(cfg)+';\n');
+if(process.env.TRADEBRIDGE_BUILD_TARGET!=='production'){
+  const visit=(dir)=>{for(const e of fs.readdirSync(dir,{withFileTypes:true})){
+    const p=path.join(dir,e.name);
+    if(e.isDirectory())visit(p);
+    else if(e.name.endsWith('.html')){
+      let html=fs.readFileSync(p,'utf8');
+      if(!/<meta[^>]+name=["']robots["']/i.test(html))html=html.replace(/<head>/i,'<head><meta name="robots" content="noindex,nofollow,noarchive">');
+      fs.writeFileSync(p,html);
+    }
+  }};visit(dest);
+}
 console.log('Public-only static build ready:',dest,'apiConfigured='+Boolean(api),'ga4Configured='+Boolean(measurement));
