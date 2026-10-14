@@ -25,7 +25,9 @@ jobs:
           node --check api/intake.js
           node --check api/newsletter.js
       - name: Test intake validation and safe failure states
-        run: node --test tests/api.test.cjs
+        run: node --test tests/api.test.cjs tests/frontend-release.test.cjs
+      - name: Validate static export script
+        run: node --check scripts/build-render-static.cjs
 
   browser-and-accessibility:
     runs-on: ubuntu-latest
