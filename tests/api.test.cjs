@@ -17,4 +17,13 @@ test('intake requires explicit follow-up permission',async()=>{const r=await inv
 test('intake rejects forged origins',async()=>{const r=await invoke(intake,valid,'POST',{origin:'https://untrusted.example'});assert.equal(r.code,403)});
 test('intake rejects honeypot',async()=>{const r=await invoke(intake,{...valid,website_fax:'spam'});assert.equal(r.code,400)});
 test('intake fails closed without secure receiver',async()=>{const r=await invoke(intake,valid);assert.equal(r.code,503);assert.equal(r.payload.accepted,false)});
-test('Phase One newsletter rejects all enrollment requests without forwarding',async()=>{\n const r=await invoke(newsletter,{email:'work@example.com',consent:true,client_submission_id:'synthetic-only-001'});\n assert.equal(r.code,410);assert.equal(r.payload.accepted,false);assert.equal(r.payload.error,'newsletter_unavailable');\n});\ntest('Phase One newsletter rejects malformed requests without acknowledgment',async()=>{\n const r=await invoke(newsletter,{email:'',consent:false});assert.equal(r.code,410);assert.equal(r.payload.accepted,false);\n});\ntest('Phase One newsletter permits no GET subscription',async()=>{\n const r=await invoke(newsletter,{},'GET');assert.equal(r.code,405);\n});\n
+test('Phase One newsletter rejects all enrollment requests without forwarding',async()=>{
+ const r=await invoke(newsletter,{email:'work@example.com',consent:true,client_submission_id:'synthetic-only-001'});
+ assert.equal(r.code,410);assert.equal(r.payload.accepted,false);assert.equal(r.payload.error,'newsletter_unavailable');
+});
+test('Phase One newsletter rejects malformed requests without acknowledgment',async()=>{
+ const r=await invoke(newsletter,{email:'',consent:false});assert.equal(r.code,410);assert.equal(r.payload.accepted,false);
+});
+test('Phase One newsletter permits no GET subscription',async()=>{
+ const r=await invoke(newsletter,{},'GET');assert.equal(r.code,405);
+});
