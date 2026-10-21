@@ -8,10 +8,11 @@ const path=require('node:path');
 const root=path.resolve(__dirname,'..');
 const dest=path.resolve(process.env.TRADEBRIDGE_STATIC_OUT_DIR||path.join(root,'dist-static'));
 const api=String(process.env.TRADEBRIDGE_INTAKE_API_BASE_URL||'').trim();
-const measurement=String(process.env.TRADEBRIDGE_GA4_MEASUREMENT_ID||'').trim();
+if(process.env.TRADEBRIDGE_GA4_MEASUREMENT_ID)throw Error('Phase One excludes GA4 measurement');
+const measurement='';
 if(api){const u=new URL(api);if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.pathname!=='/')throw Error('API base must be a bare HTTPS origin');}
 if(process.env.TRADEBRIDGE_BUILD_TARGET==='production'&&!api)throw Error('Production build requires verified intake API origin');
-if(measurement&&!/^G-[A-Z0-9]+$/.test(measurement))throw Error('Invalid GA4 measurement ID');
+
 if(dest===root||root.startsWith(dest+path.sep))throw Error('Refusing to overwrite source tree');
 fs.rmSync(dest,{recursive:true,force:true});fs.mkdirSync(dest,{recursive:true});
 const files=['index.html','404.html','robots.txt','sitemap.xml','tradebridge-logo-nav.png','tradebridge-logo-full.png'];
