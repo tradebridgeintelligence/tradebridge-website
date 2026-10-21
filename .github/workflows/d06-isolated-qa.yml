@@ -1,0 +1,31 @@
+name: D06 Isolated Source QA (No Deploy)
+on:
+  push:
+    branches:
+      - command-d06-20261021-phase1-frontend
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  d06-source-only:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout exact branch commit, without persisted credentials
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Report commit identity
+        run: git rev-parse HEAD
+      - name: Check JavaScript syntax
+        run: |
+          node --check assets/site.js
+          node --check scripts/build-render-static.cjs
+          node --check api/newsletter.js
+          node --check api/intake.js
+          node --check tests/frontend-release.test.cjs
+          node --check tests/api.test.cjs
+      - name: Static website and metadata contracts
+        run: python3 tests/validate_site.py
+      - name: Isolated intake and Phase One negative cases
+        run: node --test tests/api.test.cjs tests/frontend-release.test.cjs
