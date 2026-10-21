@@ -32,5 +32,10 @@
         }
       ]
     }
-  ]
+  ],
+  "git": {
+    "deploymentEnabled": {
+      "command-d06-20261021-phase1-frontend": false
+    }
+  }
 }
