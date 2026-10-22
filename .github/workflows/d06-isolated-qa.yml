@@ -31,10 +31,11 @@ jobs:
           node --check api/intake.js &&
           node --check tests/frontend-release.test.cjs &&
           node --check tests/api.test.cjs
+          node --check tests/d06-header-candidate.test.cjs
           syntax=$?
           python3 tests/validate_site.py
           static=$?
-          node --test tests/api.test.cjs tests/frontend-release.test.cjs
+          node --test tests/api.test.cjs tests/frontend-release.test.cjs tests/d06-header-candidate.test.cjs
           negative=$?
           browser=99
           if [ "$syntax" -eq 0 ] && [ "$static" -eq 0 ] && [ "$negative" -eq 0 ]; then
@@ -63,7 +64,7 @@ jobs:
             echo "Node version: $(node --version)"
             echo "Syntax exit: $syntax"
             echo "Static contract exit: $static"
-            echo "Phase One negative/API exit: $negative"
+            echo "Phase One negative/API/headers candidate exit: $negative"
             echo "Local browser and accessibility exit: $browser"
             echo 'Browser width coverage: 1440,1280,1024,768,390,320 when executed'
             echo 'Consent: no newsletter, no optional GA4; first-party inquiry attribution retained'
