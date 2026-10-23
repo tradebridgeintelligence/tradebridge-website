@@ -25,5 +25,43 @@ const nextSubmissionId=()=>globalThis.crypto?.randomUUID?globalThis.crypto.rando
 const fill=(form)=>{for(const k of allowed.concat(['first_landing_page','first_referrer'])){const e=form.elements.namedItem(k);if(e)e.value=safeValue(saved[k]||'')}const c=form.elements.namedItem('cta_source');if(c)c.value=safeValue(q.get('cta')||saved.cta_source||'direct');const d=form.elements.namedItem('division_preselection');if(d)d.value=safeValue(q.get('intent')||'not-sure')};
 function buttonBusy(form,busy){let b=form.querySelector('[type=submit]');if(b){b.disabled=busy;b.setAttribute('aria-busy',String(busy));if(busy){b.dataset.oldLabel=b.textContent;b.textContent='Submitting…'}else{b.textContent=b.dataset.oldLabel||b.textContent}}}
 const form=document.querySelector('#intake-form');
-if(form){fill(form);const selected=form.elements.namedItem('intent'),intent=safeValue(q.get('intent'));if(['research','operations','ventures','not-sure'].includes(intent))selected.value=intent;const status=document.querySelector('#form-status');let started=false;const mark=()=>{if(started)return;started=true;track('intake_start',{division:selected.value,cta_source:q.get('cta')||'direct'})};form.addEventListener('focusin',mark,{once:true});form.addEventListener('input',mark,{once:true});let submitting=false;const submissionKey='tb_intake_submission_id_v2';let submissionId;try{submissionId=sessionStorage.getItem(submissionKey)}catch{}if(!submissionId){submissionId=nextSubmissionId();try{sessionStorage.setItem(submissionKey,submissionId)}catch{}}form.addEventListener('submit',async e=>{e.preventDefault();mark();if(submitting)return;status.textContent='';status.className='form-status';if(!form.reportValidity())return;const payload=Object.fromEntries(new FormData(form));payload.follow_up_ack=form.elements.namedItem('follow_up_ack').checked;payload.newsletter_consent=false;payload.client_submission_id=submissionId;payload.first_landing_page=saved.first_landing_page||location.pathname;payload.first_referrer=saved.first_referrer||'';submitting=true;buttonBusy(form,true);try{const endpoint=renderEndpoint(form,'/v1/intake');if(!endpoint)throw new Error('Intake endpoint not configured');const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),credentials:'omit',signal:AbortSignal.timeout(14000)});let data={};try{data=await response.json()}catch{}if(!response.ok||data.accepted!==true||!data.record_id)throw new Error('Submission acknowledgement not verified');track('intake_submit',{division:selected.value,cta_source:payload.cta_source||'direct',campaign_id:saved.growth_campaign_id||saved.utm_campaign||'',content_id:saved.growth_content_id||saved.utm_content||''});try{sessionStorage.setItem('tb_intake_ack','1');sessionStorage.removeItem(submissionKey)}catch{}location.assign('/intake-received/')}catch(err){status.classList.add('error');status.textContent='We could not confirm whether your request was received. It may have been recorded. Please retry with the same details, or email jnichols@tradebridgeintelligence.com for assistance.';status.focus()}finally{submitting=false;buttonBusy(form,false)}})}
+function setupIntakeChallenge(form,status,sitekey){
+  if(!sitekey)return {enabled:false,token:()=>'',reset:()=>{}};
+  let widget=null;
+  const slot=document.createElement('div');
+  slot.id='tradebridge-security-check';
+  slot.className='turnstile-check';
+  slot.setAttribute('aria-label','Security verification');
+  const footer=form.querySelector('.form-footer');
+  if(footer)footer.prepend(slot);
+  const script=document.createElement('script');
+  script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  script.async=true;
+  script.defer=true;
+  script.onload=()=>{
+    try{
+      if(!footer||!window.turnstile?.render)throw Error('challenge_not_available');
+      widget=window.turnstile.render(slot,{sitekey,action:'tradebridge_intake'});
+    }catch{
+      status.classList.add('error');
+      status.textContent='Security verification is unavailable. You can email jnichols@tradebridgeintelligence.com.';
+    }
+  };
+  script.onerror=()=>{
+    status.classList.add('error');
+    status.textContent='Security verification could not load. Please retry or email jnichols@tradebridgeintelligence.com.';
+  };
+  document.head.appendChild(script);
+  return {
+    enabled:true,
+    token:()=>{
+      try{return widget!==null&&window.turnstile?.getResponse?
+        String(window.turnstile.getResponse(widget)||''):''}catch{return ''}
+    },
+    reset:()=>{
+      try{if(widget!==null&&window.turnstile?.reset)window.turnstile.reset(widget)}catch{}
+    }
+  };
+}
+if(form){fill(form);const selected=form.elements.namedItem('intent'),intent=safeValue(q.get('intent'));if(['research','operations','ventures','not-sure'].includes(intent))selected.value=intent;const status=document.querySelector('#form-status');const challenge=setupIntakeChallenge(form,status,String(cfg.turnstileSitekey||'').trim());let started=false;const mark=()=>{if(started)return;started=true;track('intake_start',{division:selected.value,cta_source:q.get('cta')||'direct'})};form.addEventListener('focusin',mark,{once:true});form.addEventListener('input',mark,{once:true});let submitting=false;const submissionKey='tb_intake_submission_id_v2';let submissionId;try{submissionId=sessionStorage.getItem(submissionKey)}catch{}if(!submissionId){submissionId=nextSubmissionId();try{sessionStorage.setItem(submissionKey,submissionId)}catch{}}form.addEventListener('submit',async e=>{e.preventDefault();mark();if(submitting)return;status.textContent='';status.className='form-status';if(!form.reportValidity())return;const payload=Object.fromEntries(new FormData(form));delete payload['cf-turnstile-response'];if(challenge.enabled){const token=challenge.token();if(!token){status.classList.add('error');status.textContent='Please complete the security verification before submitting. If it is unavailable, email jnichols@tradebridgeintelligence.com.';status.focus();return}payload.turnstile_token=token;}payload.follow_up_ack=form.elements.namedItem('follow_up_ack').checked;payload.newsletter_consent=false;payload.client_submission_id=submissionId;payload.first_landing_page=saved.first_landing_page||location.pathname;payload.first_referrer=saved.first_referrer||'';submitting=true;buttonBusy(form,true);try{const endpoint=renderEndpoint(form,'/v1/intake');if(!endpoint)throw new Error('Intake endpoint not configured');const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),credentials:'omit',signal:AbortSignal.timeout(14000)});let data={};try{data=await response.json()}catch{}if(!response.ok||data.accepted!==true||!data.record_id)throw new Error('Submission acknowledgement not verified');track('intake_submit',{division:selected.value,cta_source:payload.cta_source||'direct',campaign_id:saved.growth_campaign_id||saved.utm_campaign||'',content_id:saved.growth_content_id||saved.utm_content||''});try{sessionStorage.setItem('tb_intake_ack','1');sessionStorage.removeItem(submissionKey)}catch{}location.assign('/intake-received/')}catch(err){status.classList.add('error');status.textContent='We could not confirm whether your request was received. It may have been recorded. Please retry with the same details, or email jnichols@tradebridgeintelligence.com for assistance.';status.focus()}finally{submitting=false;buttonBusy(form,false);challenge.reset()}})}
 })();
