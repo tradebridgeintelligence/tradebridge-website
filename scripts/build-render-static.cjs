@@ -10,8 +10,12 @@ const dest=path.resolve(process.env.TRADEBRIDGE_STATIC_OUT_DIR||path.join(root,'
 const api=String(process.env.TRADEBRIDGE_INTAKE_API_BASE_URL||'').trim();
 if(process.env.TRADEBRIDGE_GA4_MEASUREMENT_ID)throw Error('Phase One excludes GA4 measurement');
 const measurement='';
+// Public widget sitekey only; the private verification secret belongs on the API.
+const sitekey=String(process.env.TRADEBRIDGE_TURNSTILE_SITEKEY||'').trim();
+if(sitekey&&!/^[A-Za-z0-9_-]{10,150}$/.test(sitekey))throw Error('Invalid public Turnstile sitekey');
 if(api){const u=new URL(api);if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.pathname!=='/')throw Error('API base must be a bare HTTPS origin');}
 if(process.env.TRADEBRIDGE_BUILD_TARGET==='production'&&!api)throw Error('Production build requires verified intake API origin');
+if(process.env.TRADEBRIDGE_BUILD_TARGET==='production'&&!sitekey)throw Error('Production build requires approved challenge sitekey');
 
 if(dest===root||root.startsWith(dest+path.sep))throw Error('Refusing to overwrite source tree');
 fs.rmSync(dest,{recursive:true,force:true});fs.mkdirSync(dest,{recursive:true});
@@ -19,7 +23,7 @@ const files=['index.html','404.html','robots.txt','sitemap.xml','tradebridge-log
 const dirs=['about','accessibility','assets','business-operations','commercial-intelligence','how-tradebridge-works','insights','intake-received','newsletter-confirmation','privacy','start','ventures'];
 for(const file of files)fs.copyFileSync(path.join(root,file),path.join(dest,file));
 for(const dir of dirs)fs.cpSync(path.join(root,dir),path.join(dest,dir),{recursive:true});
-const cfg={intakeApiBaseUrl:api,ga4MeasurementId:measurement};
+const cfg={intakeApiBaseUrl:api,ga4MeasurementId:measurement,turnstileSitekey:sitekey};
 fs.writeFileSync(path.join(dest,'assets','site-config.js'),'window.TRADEBRIDGE_CONFIG='+JSON.stringify(cfg)+';\n');
 if(process.env.TRADEBRIDGE_BUILD_TARGET!=='production'){
   const visit=(dir)=>{for(const e of fs.readdirSync(dir,{withFileTypes:true})){
