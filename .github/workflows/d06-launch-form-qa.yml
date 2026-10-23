@@ -1,0 +1,34 @@
+name: D06 Launch Form Challenge - Isolated QA (No Deploy)
+on:
+  push:
+    branches:
+      - command-d06-20261023-launch-form-ui
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: d06-launch-form-ui-isolated
+  cancel-in-progress: false
+jobs:
+  isolated-source-tests:
+    if: github.ref == 'refs/heads/command-d06-20261023-launch-form-ui'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout source only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Use pinned Node runtime
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version: 22.16.0
+      - name: Source syntax
+        run: |
+          node --check assets/site.js
+          node --check scripts/build-render-static.cjs
+          node --check tests/d06-challenge-build.test.cjs
+      - name: Existing source/contract and candidate regressions
+        run: |
+          python3 tests/validate_site.py
+          node --test tests/api.test.cjs tests/frontend-release.test.cjs tests/d06-challenge-build.test.cjs
+      - name: Preserve no-deployment boundary
+        run: echo 'Synthetic-only private-source tests; no Render, API, DNS or real external bot provider calls'
