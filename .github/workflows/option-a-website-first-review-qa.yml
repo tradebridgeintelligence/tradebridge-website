@@ -1,0 +1,41 @@
+name: Option A Website-First Source QA (No Deployment)
+on:
+  push:
+    branches:
+      - command-option-a-20261024-website-first
+permissions:
+  contents: read
+concurrency:
+  group: tb-option-a-review-only
+  cancel-in-progress: false
+jobs:
+  isolated-static-candidate:
+    if: github.ref == 'refs/heads/command-option-a-20261024-website-first'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout isolated review source with no persisted write token
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Use patched pinned Node 24
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .node-version
+      - name: Validate JavaScript and existing static HTML structure
+        run: |
+          node --check assets/site.js
+          node --check scripts/build-website-first.cjs
+          node --check tests/website-first.test.cjs
+          python3 tests/validate_site.py
+      - name: Run isolated Option A source and fail-closed negative tests
+        run: node --test tests/website-first.test.cjs
+      - name: Reproduce one non-indexable review-only static output
+        run: |
+          node scripts/build-website-first.cjs
+          node -e "const x=require('./dist-website-first-review/WEBSITE_FIRST_REVIEW_MANIFEST.json'); if(x.classification!=='REVIEW_ONLY_NO_PUBLICATION'||!x.noOnlineIntakeForm||!x.nonIndexable)process.exit(1);"
+      - name: Final non-deployment attestation
+        run: |
+          echo 'Source and local build QA only.'
+          echo 'NO Render service, DNS, database, account, email, production, PR merge or publication change.'
+          echo 'Existing Phase One form/intake branch remains separate; Option A needs independent Design/Growth/privacy/legal approval and Command GO.'
