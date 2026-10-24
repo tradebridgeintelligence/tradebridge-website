@@ -120,7 +120,7 @@ test('Option A removes inactive subscription success claims from all relevant me
   }finally{b.cleanup()}
 });
 
-test('Option A preserves three divisions and quarantines two unresolved Ventures public claims for independent ruling',()=>{
+test('Option A protects Design-selected claims and the Ventures public safeguards',()=>{
   const b=build();
   try{
     assert.equal(b.result.status,0,b.result.stderr);
@@ -128,10 +128,75 @@ test('Option A preserves three divisions and quarantines two unresolved Ventures
     const ventures=read(b.dir,'ventures/index.html');
     for(const div of ['FIND IT.','BUILD IT.','OWN IT.'])assert.ok(index.includes(div));
     assert.match(index,/original-globe\.png/);
-    assert.match(index,/intelligence-led business building and investment company/);
-    assert.match(ventures,/converts proprietary intelligence, operating expertise, and technology into long-term ownership and enterprise value/);
-    // These claims are NOT approved by this check. The check only protects the
-    // independent Growth/Design dispute from being silently edited or waived.
+    assert.ok(index.includes('TradeBridge Intelligence brings together Commercial Intelligence, Business Operations and TradeBridge Ventures. We research commercial opportunities, design operating workflows, and evaluate selective venture-building and potential ownership opportunities where evidence, economics and governance support proceeding.'));
+    assert.doesNotMatch(index,/intelligence-led business building and investment company|selectively own businesses and technologies created from that intelligence/i);
+    assert.match(ventures,/<h1>Evaluate opportunities for long-term ownership and enterprise value\.<\/h1>/);
+    assert.ok(ventures.includes('TradeBridge Ventures evaluates opportunities to build, partner, invest or acquire where evidence, operating economics and governance support the case. Any potential ownership arrangement requires separate diligence, terms, approvals and documentation.'));
+    assert.doesNotMatch(ventures,/TradeBridge Ventures converts proprietary intelligence|No website submission creates a commitment|Selectively turn operating advantage into long-term enterprise value/i);
+    assert.ok(ventures.includes('Sending an email or other inquiry does not create a commitment, investment offer, equity entitlement or partnership.'));
+    for(const safeguard of ['does not represent that it operates an investment fund','has committed investment capital','a closed portfolio','realized returns or exits','equity entitlement','separate diligence, terms, approvals and documentation']){
+      assert.ok(ventures.includes(safeguard),'missing public claim safeguard: '+safeguard);
+    }
+    // These are Design-selected draft corrections, NOT independent acceptance
+    // of this exact revised source or authorization to release the website.
+  }finally{b.cleanup()}
+});
+
+test('Option A preserves division intent through six static email-contact journeys',()=>{
+  const b=build();
+  try{
+    assert.equal(b.result.status,0,b.result.stderr);
+    const start=read(b.dir,'start/index.html');
+    const routes=[
+      {path:'commercial-intelligence/index.html',anchor:'commercial-intelligence',subject:'TradeBridge Inquiry — Commercial Intelligence',label:'Contact by Email — Commercial Intelligence'},
+      {path:'business-operations/index.html',anchor:'business-operations',subject:'TradeBridge Inquiry — Business Operations',label:'Contact by Email — Business Operations'},
+      {path:'ventures/index.html',anchor:'ventures',subject:'TradeBridge Inquiry — Ventures',label:'Contact by Email — Ventures'}
+    ];
+    let total=0;
+    for(const route of routes){
+      const c=read(b.dir,route.path);
+      const anchorLink='href="/start/#'+route.anchor+'"';
+      assert.equal(c.split(anchorLink).length-1,2,'two division CTAs required: '+route.path);
+      assert.equal(c.split('>'+route.label+'</a>').length-1,2,'clear email-only labels required: '+route.path);
+      assert.doesNotMatch(c,/href="\/start\/\?intent=/i,route.path);
+      const anchorAt=start.indexOf('<h3 id="'+route.anchor+'">');
+      assert.ok(anchorAt>0,'static Start Here division anchor missing: '+route.anchor);
+      const end=start.indexOf('</div>',anchorAt);
+      assert.ok(end>anchorAt,'division text block not closed: '+route.anchor);
+      const text=start.slice(anchorAt,end);
+      const subjectHref='href="mailto:jnichols@tradebridgeintelligence.com?subject='+encodeURIComponent(route.subject)+'"';
+      assert.ok(text.includes(subjectHref),'correct encoded email subject missing: '+route.anchor);
+      assert.ok(text.includes('copy <strong>jnichols@tradebridgeintelligence.com</strong>'),route.anchor);
+      assert.ok(text.includes('Do not include sensitive or confidential records.'),route.anchor);
+      assert.ok(text.includes('href="/privacy/"'),route.anchor);
+      assert.ok(text.includes('Delivery and a reply are not guaranteed.'),route.anchor);
+      total+=2;
+    }
+    assert.equal(total,6);
+    assert.doesNotMatch(read(b.dir,'assets/site.js'),/sessionStorage|localStorage|URLSearchParams|fetch\s*\(|CustomEvent/i);
+  }finally{b.cleanup()}
+});
+
+test('Option A candidate copy qualifies email delivery, accessibility and privacy request scope',()=>{
+  const b=build();
+  try{
+    assert.equal(b.result.status,0,b.result.stderr);
+    const start=read(b.dir,'start/index.html');
+    assert.ok(start.includes('Selecting Email TradeBridge may open your configured email application.'));
+    assert.ok(start.includes('If it does not, copy jnichols@tradebridgeintelligence.com into your preferred email service.'));
+    assert.ok(start.includes('Your message is sent only when you choose to send it.'));
+    assert.ok(start.includes('does not submit, store or acknowledge an inquiry'));
+    assert.ok(start.includes('cannot confirm delivery; a reply is not guaranteed.'));
+    assert.match(start,/Do not email passwords, banking details, regulated information/);
+    const access=read(b.dir,'accessibility/index.html');
+    assert.ok(access.includes('If a page, navigation link or email contact option is difficult to use, we welcome feedback.'));
+    assert.doesNotMatch(access,/If a page, link or form is difficult to use/);
+    const privacy=read(b.dir,'privacy/index.html');
+    assert.ok(privacy.includes("If you send TradeBridge an email, your email service processes the message and attempts delivery to TradeBridge's Google Workspace mail system."));
+    assert.ok(privacy.includes('personal information associated with your use of this website or your correspondence with TradeBridge'));
+    assert.ok(privacy.includes('We may need to verify your identity or authority'));
+    assert.ok(privacy.includes('does not promise immediate deletion from every system or backup'));
+    assert.doesNotMatch(privacy,/your email provider sends your message and associated address/);
   }finally{b.cleanup()}
 });
 
