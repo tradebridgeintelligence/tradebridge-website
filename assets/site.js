@@ -1,67 +1,24 @@
-(()=>{'use strict';
-const MAX=180, allowed=['utm_source','utm_medium','utm_campaign','utm_content','growth_campaign_id','growth_content_id'];
-const safeValue=(s)=>typeof s==='string'?s.trim().slice(0,MAX).replace(/[\u0000-\u001f]/g,''):'';
-const safePath=(s)=>{try{const u=new URL(s,location.origin);return u.origin===location.origin?u.pathname.slice(0,300):''}catch{return ''}};
-const referrer=()=>{try{if(!document.referrer)return '';const u=new URL(document.referrer);return (u.origin+u.pathname).slice(0,350)}catch{return ''}};
-let saved={};
-try{saved=JSON.parse(sessionStorage.getItem('tb_attribution_v1')||'{}')||{}}catch{}
-const q=new URLSearchParams(location.search);
-const normalize={campaign_id:'growth_campaign_id',content_id:'growth_content_id',tb_campaign_id:'growth_campaign_id',tb_content_id:'growth_content_id'};
-for(const key of allowed){let incoming=q.get(key);if(!incoming){for(const [alias,to] of Object.entries(normalize)){if(to===key&&q.has(alias)){incoming=q.get(alias);break}}}if(incoming)saved[key]=safeValue(incoming)}
-if(!saved.first_landing_page)saved.first_landing_page=location.pathname.slice(0,300);
-if(!saved.first_referrer)saved.first_referrer=referrer();
-try{sessionStorage.setItem('tb_attribution_v1',JSON.stringify(saved))}catch{}
-const cfg=window.TRADEBRIDGE_CONFIG||{};
-const track=(name,props={})=>{const safe={};for(const k of ['division','cta_source','content_id','campaign_id','path','category'])if(typeof props[k]==='string')safe[k]=safeValue(props[k]);document.dispatchEvent(new CustomEvent('tradebridge:analytics',{detail:{event:name,...safe}}));};
-window.tradebridgeTrack=track;
-const menu=document.querySelector('#primary-menu'),toggle=document.querySelector('#menu-toggle');
-if(menu&&toggle){const close=()=>{menu.classList.remove('is-open');toggle.setAttribute('aria-expanded','false')};toggle.addEventListener('click',()=>{const open=menu.classList.toggle('is-open');toggle.setAttribute('aria-expanded',String(open))});menu.querySelectorAll('a').forEach(a=>a.addEventListener('click',close));document.addEventListener('keydown',e=>{if(e.key==='Escape')close()});document.addEventListener('click',e=>{if(!menu.contains(e.target)&&!toggle.contains(e.target))close()})}
-const page=document.body.dataset.page||'home';
-if(['commercial-intelligence','business-operations','ventures'].includes(page))track('division_view',{division:page,path:location.pathname});
-document.querySelectorAll('a[data-cta]').forEach(a=>a.addEventListener('click',()=>track('cta_click',{division:a.dataset.division||page,cta_source:a.dataset.cta||page,campaign_id:saved.growth_campaign_id||saved.utm_campaign||'',content_id:saved.growth_content_id||saved.utm_content||''})));
-document.querySelectorAll('a[data-insight]').forEach(a=>a.addEventListener('click',()=>track('insight_engage',{content_id:a.dataset.insight||'',category:a.dataset.category||'article'})));
-const renderEndpoint=(form,route)=>{const base=String(cfg.intakeApiBaseUrl||'').trim();if(!base)return form.action;try{const u=new URL(base);if(u.protocol!=='https:'||u.username||u.password||u.search||u.hash||u.pathname!=='/')return '';return u.origin+route}catch{return ''}};
-const nextSubmissionId=()=>globalThis.crypto?.randomUUID?globalThis.crypto.randomUUID():String(Date.now())+'-'+String(Math.random()).slice(2);
-const fill=(form)=>{for(const k of allowed.concat(['first_landing_page','first_referrer'])){const e=form.elements.namedItem(k);if(e)e.value=safeValue(saved[k]||'')}const c=form.elements.namedItem('cta_source');if(c)c.value=safeValue(q.get('cta')||saved.cta_source||'direct');const d=form.elements.namedItem('division_preselection');if(d)d.value=safeValue(q.get('intent')||'not-sure')};
-function buttonBusy(form,busy){let b=form.querySelector('[type=submit]');if(b){b.disabled=busy;b.setAttribute('aria-busy',String(busy));if(busy){b.dataset.oldLabel=b.textContent;b.textContent='Submitting…'}else{b.textContent=b.dataset.oldLabel||b.textContent}}}
-const form=document.querySelector('#intake-form');
-function setupIntakeChallenge(form,status,sitekey){
-  if(!sitekey)return {enabled:false,token:()=>'',reset:()=>{}};
-  let widget=null;
-  const slot=document.createElement('div');
-  slot.id='tradebridge-security-check';
-  slot.className='turnstile-check';
-  slot.setAttribute('aria-label','Security verification');
-  const footer=form.querySelector('.form-footer');
-  if(footer)footer.prepend(slot);
-  const script=document.createElement('script');
-  script.src='https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
-  script.async=true;
-  script.defer=true;
-  script.onload=()=>{
-    try{
-      if(!footer||!window.turnstile?.render)throw Error('challenge_not_available');
-      widget=window.turnstile.render(slot,{sitekey,action:'tradebridge_intake'});
-    }catch{
-      status.classList.add('error');
-      status.textContent='Security verification is unavailable. You can email jnichols@tradebridgeintelligence.com.';
-    }
+(() => {
+  'use strict';
+  // Option A: public-information / email-only candidate.
+  // Navigation only. No web form, API, storage, analytics, Turnstile, or outbound fetch.
+  const menu = document.querySelector('#primary-menu');
+  const toggle = document.querySelector('#menu-toggle');
+  if (!menu || !toggle) return;
+
+  const close = () => {
+    menu.classList.remove('is-open');
+    toggle.setAttribute('aria-expanded', 'false');
   };
-  script.onerror=()=>{
-    status.classList.add('error');
-    status.textContent='Security verification could not load. Please retry or email jnichols@tradebridgeintelligence.com.';
-  };
-  document.head.appendChild(script);
-  return {
-    enabled:true,
-    token:()=>{
-      try{return widget!==null&&window.turnstile?.getResponse?
-        String(window.turnstile.getResponse(widget)||''):''}catch{return ''}
-    },
-    reset:()=>{
-      try{if(widget!==null&&window.turnstile?.reset)window.turnstile.reset(widget)}catch{}
-    }
-  };
-}
-if(form){fill(form);const selected=form.elements.namedItem('intent'),intent=safeValue(q.get('intent'));if(['research','operations','ventures','not-sure'].includes(intent))selected.value=intent;const status=document.querySelector('#form-status');const challenge=setupIntakeChallenge(form,status,String(cfg.turnstileSitekey||'').trim());let started=false;const mark=()=>{if(started)return;started=true;track('intake_start',{division:selected.value,cta_source:q.get('cta')||'direct'})};form.addEventListener('focusin',mark,{once:true});form.addEventListener('input',mark,{once:true});let submitting=false;const submissionKey='tb_intake_submission_id_v2';let submissionId;try{submissionId=sessionStorage.getItem(submissionKey)}catch{}if(!submissionId){submissionId=nextSubmissionId();try{sessionStorage.setItem(submissionKey,submissionId)}catch{}}form.addEventListener('submit',async e=>{e.preventDefault();mark();if(submitting)return;status.textContent='';status.className='form-status';if(!form.reportValidity())return;const payload=Object.fromEntries(new FormData(form));delete payload['cf-turnstile-response'];if(challenge.enabled){const token=challenge.token();if(!token){status.classList.add('error');status.textContent='Please complete the security verification before submitting. If it is unavailable, email jnichols@tradebridgeintelligence.com.';status.focus();return}payload.turnstile_token=token;}payload.follow_up_ack=form.elements.namedItem('follow_up_ack').checked;payload.newsletter_consent=false;payload.client_submission_id=submissionId;payload.first_landing_page=saved.first_landing_page||location.pathname;payload.first_referrer=saved.first_referrer||'';submitting=true;buttonBusy(form,true);try{const endpoint=renderEndpoint(form,'/v1/intake');if(!endpoint)throw new Error('Intake endpoint not configured');const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload),credentials:'omit',signal:AbortSignal.timeout(14000)});let data={};try{data=await response.json()}catch{}if(!response.ok||data.accepted!==true||!data.record_id)throw new Error('Submission acknowledgement not verified');track('intake_submit',{division:selected.value,cta_source:payload.cta_source||'direct',campaign_id:saved.growth_campaign_id||saved.utm_campaign||'',content_id:saved.growth_content_id||saved.utm_content||''});try{sessionStorage.setItem('tb_intake_ack','1');sessionStorage.removeItem(submissionKey)}catch{}location.assign('/intake-received/')}catch(err){status.classList.add('error');status.textContent='We could not confirm whether your request was received. It may have been recorded. Please retry with the same details, or email jnichols@tradebridgeintelligence.com for assistance.';status.focus()}finally{submitting=false;buttonBusy(form,false);challenge.reset()}})}
+  toggle.addEventListener('click', () => {
+    const isOpen = menu.classList.toggle('is-open');
+    toggle.setAttribute('aria-expanded', String(isOpen));
+  });
+  menu.querySelectorAll('a').forEach((link) => link.addEventListener('click', close));
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') close();
+  });
+  document.addEventListener('click', (event) => {
+    if (!menu.contains(event.target) && !toggle.contains(event.target)) close();
+  });
 })();
