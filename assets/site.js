@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   // Option A: public-information / email-only candidate.
-  // Navigation only. No web form, API, storage, analytics, Turnstile, or outbound fetch.
+  // Navigation only. No network communication or collection of contact data.
   const menu = document.querySelector('#primary-menu');
   const toggle = document.querySelector('#menu-toggle');
   if (!menu || !toggle) return;
