@@ -22,6 +22,7 @@ test('privacy copy replaces old receiver/draft statements without changing site 
  for(const expected of [
    '<title>Privacy | TradeBridge Intelligence</title>',
    'href="https://tradebridgeintelligence.com/privacy/"',
+   'How TradeBridge Intelligence handles website inquiries, submitted contact details, and referral attribution.',
    '<main id="main">','<h1>How website information is used.</h1>',
    'href="/start/?intent=not-sure',
    'FIND IT.', 'BUILD IT.', 'OWN IT.'
