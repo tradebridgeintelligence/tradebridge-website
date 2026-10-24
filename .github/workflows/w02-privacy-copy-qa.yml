@@ -1,0 +1,34 @@
+name: W02 Privacy Page Source Review - Isolated QA (No Deploy)
+on:
+  push:
+    branches:
+      - command-w02-20261024-privacy-copy-review
+permissions:
+  contents: read
+concurrency:
+  group: w02-privacy-page-source-only
+  cancel-in-progress: false
+jobs:
+  isolated-static-qa:
+    if: github.ref == 'refs/heads/command-w02-20261024-privacy-copy-review'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout review branch only
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+      - name: Pinned Node runtime
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .node-version
+      - name: Check source syntax and HTML navigation
+        run: |
+          node --check tests/w02-privacy-copy.test.cjs
+          node --check assets/site.js
+          node --check scripts/build-render-static.cjs
+          python3 tests/validate_site.py
+      - name: Existing contracts and privacy editorial regression, no network
+        run: |
+          node --test tests/api.test.cjs tests/frontend-release.test.cjs \
+            tests/d06-challenge-build.test.cjs tests/w02-privacy-copy.test.cjs
+      - name: Confirm source-only hold
+        run: echo 'W02 offline code/HTML checks only, no Render deploy, no database, no origin change, no DNS or publication'
