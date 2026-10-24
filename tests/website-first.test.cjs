@@ -233,3 +233,16 @@ test('Option A output is deterministic and accompanied by matching review-only c
     assert.equal(Object.keys(m1.sha256).length,5);
   }finally{a.cleanup();b.cleanup()}
 });
+
+test('Option A Growth R01 Insights disclaimer uses email-contact language without changing article protections',()=>{
+  const b=build();
+  try{
+    assert.equal(b.result.status,0,b.result.stderr);
+    const article=read(b.dir,'insights/selective-ownership/index.html');
+    assert.ok(article.includes('Contacting TradeBridge, including by email, does not constitute an investment offer or create an ownership allocation or commitment. Any arrangement requires separate review, authorization, terms and documentation.'));
+    assert.doesNotMatch(article,/A website inquiry does not establish an investment offer, an ownership allocation or a commitment/);
+    assert.ok(article.includes('BUILD, PARTNER, INVEST and ACQUIRE describe possibilities, not standard offers.'));
+    assert.ok(article.includes('Ownership should not be the default outcome of providing research, technology or operating expertise.'));
+    // Historical CI remains unchanged; this is an isolated corrected review candidate.
+  }finally{b.cleanup()}
+});
