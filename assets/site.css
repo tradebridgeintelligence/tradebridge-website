@@ -139,3 +139,10 @@ a{color:#006b74}
    a darker TradeBridge teal for filled actions on light surfaces. */
 .btn-primary{background:#006b74;border-color:#006b74;color:#fff}
 .btn-primary:hover{background:#00565d;border-color:#00565d;color:#fff}
+
+/* Option A R02: anchor headings must clear the responsive sticky header.
+   Existing html scroll-padding-top:90px stays unchanged. Desktop header is
+   147px, 521-760px is 117px, and <=520px is 101px in tested Chromium. */
+#commercial-intelligence,#business-operations,#ventures{scroll-margin-top:82px}
+@media(max-width:760px){#commercial-intelligence,#business-operations,#ventures{scroll-margin-top:46px}}
+@media(max-width:520px){#commercial-intelligence,#business-operations,#ventures{scroll-margin-top:31px}}
