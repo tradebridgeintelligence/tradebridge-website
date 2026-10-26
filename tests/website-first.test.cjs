@@ -246,3 +246,18 @@ test('Option A Growth R01 Insights disclaimer uses email-contact language withou
     // Historical CI remains unchanged; this is an isolated corrected review candidate.
   }finally{b.cleanup()}
 });
+
+
+test('Option A public-release readiness preflight remains blocked and non-mutating',()=>{
+  const checker=path.join(root,'scripts/check-website-first-release-readiness.cjs');
+  const p=cp.spawnSync(process.execPath,[checker],{encoding:'utf8'});
+  assert.equal(p.status,0,p.stderr);
+  const report=JSON.parse(p.stdout);
+  assert.equal(report.publicReleasePermitted,false);
+  assert.equal(report.sourceRevision,'6640f14ce8bfb63caa42c3d7245ae9f60d23b3a2');
+  assert.ok(report.blockers.includes('EMAIL_EXTERNAL_DELIVERY'));
+  assert.ok(report.blockers.includes('OD_OA01_OA07'));
+  assert.ok(report.blockers.includes('PRIVACY_LEGAL'));
+  assert.ok(report.blockers.includes('COMMAND_PRODUCTION_GO'));
+  assert.equal(report.gates.find(g=>g.id==='GROWTH_DESIGN').state,'ACCEPT_OFFLINE');
+});
