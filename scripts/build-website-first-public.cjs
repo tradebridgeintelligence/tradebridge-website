@@ -18,7 +18,7 @@ const assets=['robots.txt','sitemap.xml','tradebridge-logo-nav.png','tradebridge
 'assets/original-globe.png','assets/site.css','assets/site.js'];
 const retired=new Set(['intake-received/index.html','newsletter-confirmation/index.html']);
 const indexable=pages.filter(p=>p!=='404.html'&&!retired.has(p));
-const urlFor=p=>p==='index.html'?'/':'/'+p.slice(0,-'index.html'.length);
+const urlFor=p=>p==='index.html'?'/':p==='404.html'?'/404.html':'/'+p.slice(0,-'index.html'.length);
 const copy=p=>{const dst=path.join(staticDir,p);fs.mkdirSync(path.dirname(dst),{recursive:true});fs.copyFileSync(path.join(root,p),dst)};
 fs.rmSync(out,{recursive:true,force:true});fs.mkdirSync(staticDir,{recursive:true});
 for(const a of assets)copy(a);
