@@ -1,15 +1,16 @@
 {
+  "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "cleanUrls": false,
   "trailingSlash": true,
+  "buildCommand": "TRADEBRIDGE_BUILD_TARGET=production node scripts/build-website-first-public.cjs",
+  "git": {
+    "deploymentEnabled": false
+  },
   "headers": [
     {
       "source": "/(.*)",
       "headers": [
-        {
-          "key": "X-Robots-Tag",
-          "value": "noindex, nofollow, noarchive"
-        },
         {
           "key": "X-Content-Type-Options",
           "value": "nosniff"
@@ -32,10 +33,5 @@
         }
       ]
     }
-  ],
-  "git": {
-    "deploymentEnabled": {
-      "command-d06-20261021-phase1-frontend": false
-    }
-  }
+  ]
 }

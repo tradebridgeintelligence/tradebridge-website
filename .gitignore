@@ -1,5 +1,7 @@
 dist-static/
+dist-website-first-review/
 node_modules/
+.vercel/
 .env
 .env.*
 !.env.example

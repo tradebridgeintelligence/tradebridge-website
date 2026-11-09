@@ -1,0 +1,8 @@
+# Option A: deferred API and review evidence excluded from Vercel source upload.
+api/
+intake-service/
+reviews/
+tests/
+.github/
+.env
+.env.*

@@ -1,0 +1,45 @@
+name: Option A Public Release Source Build QA — No Deployment
+on:
+  push:
+    branches:
+      - command-option-a-20261024-website-first
+permissions:
+  contents: read
+concurrency:
+  group: tb-option-a-public-build-qa
+  cancel-in-progress: false
+jobs:
+  source-only-public-artifact:
+    if: github.ref == 'refs/heads/command-option-a-20261024-website-first'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout exact source with no persisted write token
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Use pinned Node.js release
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
+        with:
+          node-version-file: .node-version
+      - name: Validate source JavaScript and existing HTML contracts
+        run: |
+          node --check scripts/build-website-first-public.cjs
+          node --check tests/website-first-public.test.cjs
+          node --check assets/site.js
+          python3 tests/validate_site.py
+      - name: Validate public-build invariants and negative paths
+        run: node --test tests/website-first-public.test.cjs
+      - name: Preserve review-only regression safety
+        run: node --test tests/website-first.test.cjs
+      - name: Build source-only public Vercel artifact without deploying
+        env:
+          TRADEBRIDGE_BUILD_TARGET: production
+        run: |
+          node scripts/build-website-first-public.cjs
+          node -e "const fs=require('node:fs');const p='.vercel/output';const c=JSON.parse(fs.readFileSync(p+'/config.json'));if(c.version!==3||fs.existsSync(p+'/functions'))process.exit(1);"
+      - name: Attest strict non-deployment and unchanged live domain
+        run: |
+          echo "NO Vercel project creation, deployment, promotion, domain attachment, DNS or production publication."
+          echo "Review-only builder remains separate; actual staged/hosted QA requires new Command authorization."
+          echo "Git automatic deployment is explicitly disabled by vercel.json."
