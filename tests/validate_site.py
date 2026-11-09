@@ -114,10 +114,14 @@ for marker in ("FIND IT.", "BUILD IT.", "OWN IT.", "id=\"three-divisions\""):
     check(marker in (ROOT/"index.html").read_text(), f"Homepage missing approved {marker}")
 config = json.loads((ROOT / "vercel.json").read_text())
 headers = [h["value"] for x in config["headers"] for h in x["headers"] if h["key"].lower()=="x-robots-tag"]
-check(any("noindex" in h for h in headers), "Staging deployment lacks noindex")
+check(not headers, "Option A public Vercel configuration retains global indexing blocks")
+check(config.get("git", {}).get("deploymentEnabled") is False, "Automatic Git deployment must stay disabled before Command release")
+review_builder = (ROOT / "scripts/build-website-first.cjs").read_text()
+for marker in ("REVIEW_ONLY_NO_PUBLICATION", "Option A production build NOT authorized", "noindex,nofollow,noarchive", "Disallow: /"):
+    check(marker in review_builder, f"Review-only build safeguard missing: {marker}")
 for api in ["api/_common.js", "api/intake.js", "api/newsletter.js"]:
-    check((ROOT/api).is_file(), f"Intake API missing: {api}")
-print(f"Audited {len(ROUTES)+1} HTML routes, links/assets, logo treatment, sitemap, intake and staging directives")
+    check((ROOT/api).is_file(), f"Deferred intake source unexpectedly missing: {api}")
+print(f"Audited {len(ROUTES)+1} HTML routes, links/assets, branding, sitemap, public config, and review-only safety")
 if ERRORS:
     print("\n".join("ERROR: "+e for e in ERRORS))
     sys.exit(1)
